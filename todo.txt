@@ -1,0 +1,7 @@
+shabbir work:
+1) make login page logic
+2) fileds will be:
+name
+email
+phone number
+password
