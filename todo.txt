@@ -5,3 +5,10 @@ name
 email
 phone number
 password
+
+faizan work:
+do make the login page.html the fields will be 
+name
+email
+phone number
+password
