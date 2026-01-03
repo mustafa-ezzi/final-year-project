@@ -1,14 +1,130 @@
-shabbir work:
-1) make login page logic
-2) fileds will be:
-name
-email
-phone number
-password
+Team Task Breakdown
 
-faizan work:
-do make the login page.html the fields will be 
-name
-email
-phone number
-password
+
+ Faizan — UI / Frontend (Login Page)
+
+Responsibility:
+
+Design the Login Page UI
+
+Fields required:
+
+Name
+
+Email
+
+Phone Number
+
+Password
+
+UI Guidelines:
+
+Elegant & premium black-and-white theme
+
+Clean layout (no clutter, no over-design)
+
+Focus on spacing, typography, and smooth UX
+
+This is UI only, no backend logic
+
+Branch:
+feature/faizan
+
+--------------------------------------------------------------------------------------------------
+
+Shabbir — Backend (Login Logic)
+
+Responsibility:
+
+Implement backend logic for login/registration
+
+Handle validation and data flow for:
+
+Name
+
+Email
+
+Phone Number
+
+Password
+
+Files to be updated:
+
+models.py
+
+views.py
+
+urls.py
+
+Module/Folder:
+
+employee_register
+
+Branch:
+feature/shabbir
+
+
+-------------------------------------------------------------------------------------------------
+Aliyan — UI Refinement & Cleanup
+
+Responsibility:
+
+Review and refine the Login Page UI
+
+Make key UI adjustments to:
+
+Reduce visual clutter
+
+Improve spacing & alignment
+
+Keep the black & white theme
+
+Maintain a premium but minimal finish
+
+Basically: less noise, more class 🖤🤍
+
+Branch:
+feature/aliyan
+
+-------------------------------------------------------------------------------------------------
+
+Mustafa — Backend (Products & Cart)
+
+Responsibility:
+
+Implement backend logic for products
+
+Develop Add to Cart system
+
+Handle product listing, cart actions, and flow logic
+
+
+
+
+================================================================================================
+Communication Rules (IMPORTANT)
+
+Before starting any task:
+👉 Drop a message in the WhatsApp group saying what you’re working on
+
+After completing work:
+👉 Share update + what was done in the group
+
+====================================================================================================
+Everyone must run:
+
+git pull origin main
+
+
+Work only on your own branch
+
+Faizan → feature/faizan   ---> branch name
+
+Shabbir → feature/shabbir ---> branch name
+
+Aliyan → feature/aliyan  ---> branch name
+
+Pushing Code (Correct Way)
+git add .
+git commit -m "clear and meaningful message"
+git push origin your-branch-name (sab apni name ki branch dalenge your-branch-name hata kr....)
