@@ -3,1440 +3,347 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FashionHub - Premium Luxury Fashion Store</title>
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>FashionHub - Premium Fashion</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
   
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary: #2563eb;
-      --primary-dark: #1e40af;
-      --accent: #f59e0b;
-      --text-dark: #1f2937;
-      --text-light: #6b7280;
-      --bg-light: #f9fafb;
-      --bg-white: #ffffff;
-      --border: #e5e7eb;
-      --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
-
     body {
       font-family: 'Inter', sans-serif;
-      color: var(--text-dark);
-      background-color: var(--bg-light);
-      line-height: 1.6;
-      overflow-x: hidden;
     }
-
-    /* Navbar */
-    .navbar {
-      background: var(--bg-white) !important;
-      box-shadow: var(--shadow);
-      padding: 1rem 0;
-      transition: all 0.3s ease;
-    }
-
-    .navbar.scrolled {
-      box-shadow: var(--shadow-lg);
-    }
-
-    .navbar-brand {
+    .font-display {
       font-family: 'Playfair Display', serif;
-      font-weight: 800;
-      font-size: 1.75rem;
-      color: var(--text-dark) !important;
-      letter-spacing: -0.5px;
     }
-
-    .navbar-brand i {
-      color: var(--primary);
-      margin-right: 0.5rem;
-    }
-
-    .nav-link {
-      font-weight: 500;
-      color: var(--text-dark) !important;
-      margin: 0 0.5rem;
-      padding: 0.5rem 1rem !important;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    .nav-link:hover,
-    .nav-link.active {
-      color: var(--primary) !important;
-      background-color: rgba(37, 99, 235, 0.1);
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      border: none;
-      border-radius: 8px;
-      padding: 0.625rem 1.5rem;
-      font-weight: 600;
-      color: white;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow);
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-      color: white;
-    }
-
-    /* Hero Section */
-    .hero-section {
-      position: relative;
-      min-height: 90vh;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
-      padding: 6rem 0 4rem;
-      overflow: hidden;
-    }
-
-    .hero-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920') center/cover;
-      opacity: 0.2;
-      z-index: 0;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 800px;
-      padding: 0 1rem;
-    }
-
-    .hero-content h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      font-weight: 900;
-      margin-bottom: 1.5rem;
-      line-height: 1.2;
-      animation: fadeInUp 0.8s ease;
-    }
-
-    .hero-content p {
-      font-size: clamp(1.1rem, 2vw, 1.5rem);
-      margin-bottom: 2rem;
-      opacity: 0.95;
-      animation: fadeInUp 1s ease;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Section Styles */
-    .section-container {
-      padding: 5rem 0;
-      background: var(--bg-white);
-    }
-
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800;
-      text-align: center;
-      margin-bottom: 3rem;
-      color: var(--text-dark);
-      position: relative;
-      padding-bottom: 1rem;
-    }
-
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      border-radius: 2px;
-    }
-
-    /* Category Cards */
-    .category-card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 16px;
-      height: 400px;
-      cursor: pointer;
-      transition: all 0.4s ease;
-      box-shadow: var(--shadow-lg);
-      margin-bottom: 2rem;
-    }
-
-    .category-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-xl);
-    }
-
-    .category-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-
-    .category-card:hover img {
-      transform: scale(1.1);
-    }
-
-    .category-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-      padding: 2rem;
-      color: white;
-    }
-
-    .category-overlay h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .category-overlay p {
-      margin-bottom: 1rem;
-      opacity: 0.9;
-    }
-
-    /* Product Cards */
-    .product-card {
-      border: none;
-      border-radius: 16px;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow);
-      height: 100%;
-      background: var(--bg-white);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-xl);
-    }
-
-    .product-card img {
-      height: 280px;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-      width: 100%;
-    }
-
-    .product-card:hover img {
-      transform: scale(1.05);
-    }
-
-    .product-card .card-body {
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .product-card .card-title {
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: var(--text-dark);
-      margin-bottom: 0.75rem;
-      line-height: 1.4;
-    }
-
-    .brand-badge {
-      display: inline-block;
-      padding: 0.25rem 0.75rem;
-      background: var(--bg-light);
-      color: var(--primary);
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      border: 1px solid var(--border);
-    }
-
-    .price-tag {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin: 0.75rem 0;
-    }
-
-    .product-card .btn {
-      margin-top: auto;
-      border-radius: 8px;
-    }
-
-    /* Image Gallery */
-    .image-gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin: 3rem 0;
-    }
-
-    .gallery-item {
-      border-radius: 12px;
-      overflow: hidden;
-      height: 250px;
-      box-shadow: var(--shadow);
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .gallery-item:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-
-    .gallery-item:hover img {
-      transform: scale(1.1);
-    }
-
-    /* Product Detail */
-    .product-detail-card {
-      border: none;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: var(--shadow-xl);
-      background: var(--bg-white);
-    }
-
-    .product-detail-card img {
-      height: 100%;
-      min-height: 500px;
-      object-fit: cover;
-      width: 100%;
-    }
-
-    .product-detail-card .card-body {
-      padding: 3rem;
-    }
-
-    /* Comparison Table */
-    .comparison-table {
-      background: var(--bg-white);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: var(--shadow-lg);
-    }
-
-    .comparison-table table {
-      margin: 0;
-    }
-
-    .comparison-table thead {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: white;
-    }
-
-    .comparison-table thead th {
-      padding: 1.25rem;
-      font-weight: 600;
-      border: none;
-    }
-
-    .comparison-table tbody td {
-      padding: 1.25rem;
-      vertical-align: middle;
-      border-color: var(--border);
-    }
-
-    .comparison-table img {
-      border-radius: 12px;
-      box-shadow: var(--shadow);
-      max-width: 150px;
-      height: auto;
-    }
-
-    /* Contact Cards */
-    .contact-card {
-      border: none;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      transition: all 0.3s ease;
-      height: 100%;
-      background: var(--bg-white);
-    }
-
-    .contact-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-xl);
-    }
-
-    .contact-icon {
-      font-size: 3rem;
-      color: var(--primary);
-      margin-bottom: 1.5rem;
-    }
-
-    .contact-card .card-title {
-      font-weight: 700;
-      color: var(--text-dark);
-      margin-bottom: 1rem;
-    }
-
-    .contact-card .card-text {
-      color: var(--text-light);
-      margin-bottom: 1.5rem;
-    }
-
-    /* Admin Panel */
-    .admin-panel {
-      background: var(--bg-white);
-      border-radius: 20px;
-      padding: 3rem;
-      margin: 4rem 0;
-      box-shadow: var(--shadow-lg);
-    }
-
-    .admin-form {
-      background: var(--bg-light);
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      border: 1px solid var(--border);
-    }
-
-    .admin-form .form-label {
-      font-weight: 600;
-      color: var(--text-dark);
-      margin-bottom: 0.5rem;
-    }
-
-    .admin-form .form-control,
-    .admin-form .form-select {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.75rem;
-      transition: all 0.3s ease;
-    }
-
-    .admin-form .form-control:focus,
-    .admin-form .form-select:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-      outline: none;
-    }
-
-    .admin-panel table {
-      background: var(--bg-white);
-    }
-
-    .admin-panel thead {
-      background: var(--bg-light);
-    }
-
-    .admin-panel th {
-      font-weight: 600;
-      color: var(--text-dark);
-      border-color: var(--border);
-    }
-
-    .admin-panel td {
-      border-color: var(--border);
-      color: var(--text-dark);
-    }
-
-    /* Footer */
-    .footer {
-      background: var(--text-dark);
-      color: white;
-      padding: 4rem 0 2rem;
-      margin-top: 4rem;
-    }
-
-    .footer h5 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      color: white;
-    }
-
-    .footer a {
-      color: rgba(255, 255, 255, 0.8);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .footer a:hover {
-      color: white;
-    }
-
-    .footer .social-icons a {
-      display: inline-block;
-      width: 40px;
-      height: 40px;
-      line-height: 40px;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      margin: 0 0.5rem;
-      transition: all 0.3s ease;
-    }
-
-    .footer .social-icons a:hover {
-      background: var(--primary);
-      transform: translateY(-3px);
-    }
-
-    /* Modal */
-    .modal-content {
-      border: none;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: var(--shadow-xl);
-    }
-
-    .modal-content .form-control {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.75rem;
-    }
-
-    .modal-content .form-control:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    }
-
-    /* Responsive Design */
-    @media (max-width: 991.98px) {
-      .hero-section {
-        min-height: 70vh;
-        padding: 5rem 0 3rem;
-      }
-
-      .section-container {
-        padding: 3rem 0;
-      }
-
-      .category-card {
-        height: 350px;
-        margin-bottom: 1.5rem;
-      }
-
-      .product-card img {
-        height: 240px;
-      }
-
-      .admin-panel {
-        padding: 2rem;
-      }
-
-      .product-detail-card .card-body {
-        padding: 2rem;
-      }
-    }
-
-    @media (max-width: 767.98px) {
-      .navbar-brand {
-        font-size: 1.5rem;
-      }
-
-      .nav-link {
-        margin: 0.25rem 0;
-        padding: 0.5rem !important;
-      }
-
-      .hero-section {
-        min-height: 60vh;
-        padding: 4rem 0 2rem;
-      }
-
-      .hero-content h1 {
-        font-size: 2.5rem;
-      }
-
-      .section-container {
-        padding: 2.5rem 0;
-      }
-
-      .section-title {
-        font-size: 2rem;
-        margin-bottom: 2rem;
-      }
-
-      .category-card {
-        height: 300px;
-      }
-
-      .category-overlay {
-        padding: 1.5rem;
-      }
-
-      .product-card img {
-        height: 220px;
-      }
-
-      .image-gallery {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 1rem;
-      }
-
-      .gallery-item {
-        height: 200px;
-      }
-
-      .product-detail-card img {
-        min-height: 300px;
-      }
-
-      .product-detail-card .card-body {
-        padding: 1.5rem;
-      }
-
-      .comparison-table {
-        font-size: 0.875rem;
-      }
-
-      .comparison-table thead th,
-      .comparison-table tbody td {
-        padding: 0.75rem;
-      }
-
-      .comparison-table img {
-        max-width: 100px;
-      }
-
-      .admin-panel {
-        padding: 1.5rem;
-        margin: 2rem 0;
-      }
-
-      .admin-form {
-        padding: 1.5rem;
-      }
-
-      .contact-card {
-        margin-bottom: 1.5rem;
-      }
-
-      .footer {
-        padding: 3rem 0 1.5rem;
-        text-align: center;
-      }
-
-      .footer .col-md-4 {
-        margin-bottom: 2rem;
-      }
-    }
-
-    @media (max-width: 575.98px) {
-      .hero-content h1 {
-        font-size: 2rem;
-      }
-
-      .hero-content p {
-        font-size: 1rem;
-      }
-
-      .section-title {
-        font-size: 1.75rem;
-      }
-
-      .category-card {
-        height: 250px;
-      }
-
-      .product-card img {
-        height: 200px;
-      }
-
-      .price-tag {
-        font-size: 1.5rem;
-      }
-
-      .image-gallery {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .gallery-item {
-        height: 180px;
-      }
-
-      .comparison-table {
-        font-size: 0.75rem;
-      }
-
-      .comparison-table img {
-        max-width: 80px;
-      }
-    }
-
-    /* Smooth Scroll */
-    html {
-      scroll-behavior: smooth;
-    }
-
-    /* Loading Animation */
-    @keyframes pulse {
-      0%, 100% {
-        opacity: 1;
-      }
-      50% {
-        opacity: 0.5;
-      }
-    }
-
-    /* Utility Classes */
-    .text-primary {
-      color: var(--primary) !important;
-    }
-
-    .bg-light-custom {
-      background-color: var(--bg-light) !important;
+    .dropdown:hover .dropdown-menu {
+      display: block;
     }
   </style>
 </head>
-<body>
+
+<body class="bg-white text-black">
+  
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#home">
-        <i class="fas fa-gem"></i>FashionHub
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarMenu">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-          <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#categories">Collections</a></li>
-          <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-          <li class="nav-item">
-            <button class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#loginModal">
-              <i class="fas fa-user me-2"></i>Login
+  <nav class="fixed top-0 w-full bg-white border-b border-gray-200 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <a href="#home" class="font-display text-2xl font-bold tracking-wider">FASHIONHUB</a>
+        
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#home" class="text-sm font-medium border-b-2 border-black pb-1 transition-all">HOME</a>
+          <a href="#collections" class="text-sm font-medium border-b-2 border-transparent hover:border-black pb-1 transition-all">COLLECTIONS</a>
+          
+          <!-- Categories Dropdown -->
+          <div class="relative dropdown">
+            <button class="text-sm font-medium border-b-2 border-transparent hover:border-black pb-1 transition-all flex items-center gap-1">
+              CATEGORIES
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
             </button>
-          </li>
-        </ul>
+            <div class="dropdown-menu hidden absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 shadow-lg">
+              <a href="#mens-wear" class="block px-6 py-3 text-sm font-medium hover:bg-gray-50 transition-colors">MEN'S WEAR</a>
+              <a href="#womens-wear" class="block px-6 py-3 text-sm font-medium hover:bg-gray-50 transition-colors">WOMEN'S WEAR</a>
+              <a href="#kids-wear" class="block px-6 py-3 text-sm font-medium hover:bg-gray-50 transition-colors">KIDS WEAR</a>
+            </div>
+          </div>
+          
+          <a href="#contact" class="text-sm font-medium border-b-2 border-transparent hover:border-black pb-1 transition-all">CONTACT</a>
+        </div>
+        
+        <button class="hidden md:block px-6 py-2.5 bg-black text-white text-sm font-medium hover:bg-white hover:text-black border-2 border-black transition-all">
+          ACCOUNT
+        </button>
+        
+        <button id="mobileMenuBtn" class="md:hidden">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden md:hidden pb-4">
+        <a href="#home" class="block py-2 text-sm font-medium">HOME</a>
+        <a href="#collections" class="block py-2 text-sm font-medium">COLLECTIONS</a>
+        <div class="py-2">
+          <p class="text-sm font-medium mb-2">CATEGORIES</p>
+          <a href="#mens-wear" class="block pl-4 py-2 text-sm">MEN'S WEAR</a>
+          <a href="#womens-wear" class="block pl-4 py-2 text-sm">WOMEN'S WEAR</a>
+          <a href="#kids-wear" class="block pl-4 py-2 text-sm">KIDS WEAR</a>
+        </div>
+        <a href="#contact" class="block py-2 text-sm font-medium">CONTACT</a>
       </div>
     </div>
   </nav>
 
-  <!-- Login Modal -->
-  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-body p-0">
-          <div class="row g-0">
-            <div class="col-md-6 d-none d-md-block">
-              <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=600" 
-                   class="img-fluid h-100" style="object-fit: cover;" alt="Login">
-            </div>
-            <div class="col-md-6">
-              <div class="p-4 p-md-5">
-                <h3 class="text-center mb-4 fw-bold">Welcome Back</h3>
-                <form>
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold">Email</label>
-                    <input type="email" class="form-control" placeholder="Enter your email">
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold">Password</label>
-                    <input type="password" class="form-control" placeholder="Enter your password">
-                  </div>
-                  <button type="submit" class="btn btn-primary w-100 mb-3">
-                    <i class="fas fa-sign-in-alt me-2"></i>Login
-                  </button>
-                  <p class="text-center text-muted mb-0">
-                    Don't have an account? <a href="#" class="text-primary text-decoration-none">Register</a>
-                  </p>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Hero Section -->
-  <section class="hero-section" id="home">
-    <div class="container">
-      <div class="hero-content">
-        <h1>FashionHub</h1>
-        <p>Luxury Redefined, Style Perfected</p>
-        <a href="#categories" class="btn btn-primary btn-lg">
-          <i class="fas fa-arrow-down me-2"></i>Explore Collection
+  <section id="home" class="relative min-h-screen flex items-center justify-center bg-gray-50 pt-20">
+    <div class="absolute inset-0 opacity-10">
+      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920" alt="" class="w-full h-full object-cover">
+    </div>
+    
+    <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+      <h1 class="font-display text-6xl md:text-8xl font-bold mb-6 tracking-tight">FASHIONHUB</h1>
+      <p class="text-xl md:text-2xl text-gray-700 mb-10 font-light tracking-wide">TIMELESS ELEGANCE, MODERN STYLE</p>
+      <a href="#collections" class="inline-block px-10 py-4 bg-black text-white text-sm font-medium hover:bg-white hover:text-black border-2 border-black transition-all tracking-wider">
+        EXPLORE COLLECTION
+      </a>
+    </div>
+  </section>
+
+  <!-- Collections Section -->
+  <section id="collections" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-5xl md:text-6xl font-bold text-center mb-16 tracking-tight">OUR COLLECTIONS</h2>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <a href="#mens-wear" class="group relative overflow-hidden cursor-pointer h-96">
+          <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800" alt="Men's Collection" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+            <h3 class="font-display text-3xl font-bold mb-2">MEN'S</h3>
+            <p class="text-sm mb-4 font-light">REFINED LUXURY FOR THE MODERN GENTLEMAN</p>
+            <span class="inline-block px-6 py-2 bg-white text-black text-xs font-medium hover:bg-black hover:text-white border-2 border-white transition-all">
+              SHOP NOW
+            </span>
+          </div>
+        </a>
+        
+        <a href="#womens-wear" class="group relative overflow-hidden cursor-pointer h-96">
+          <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800" alt="Women's Collection" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+            <h3 class="font-display text-3xl font-bold mb-2">WOMEN'S</h3>
+            <p class="text-sm mb-4 font-light">SOPHISTICATED STYLE FOR THE CONTEMPORARY WOMAN</p>
+            <span class="inline-block px-6 py-2 bg-white text-black text-xs font-medium hover:bg-black hover:text-white border-2 border-white transition-all">
+              SHOP NOW
+            </span>
+          </div>
+        </a>
+        
+        <a href="#kids-wear" class="group relative overflow-hidden cursor-pointer h-96">
+          <img src="https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=800" alt="Kids Collection" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+            <h3 class="font-display text-3xl font-bold mb-2">KIDS</h3>
+            <p class="text-sm mb-4 font-light">PLAYFUL STYLE FOR THE YOUNG ONES</p>
+            <span class="inline-block px-6 py-2 bg-white text-black text-xs font-medium hover:bg-black hover:text-white border-2 border-white transition-all">
+              SHOP NOW
+            </span>
+          </div>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Categories Section -->
-  <section id="categories" class="section-container">
-    <div class="container">
-      <h2 class="section-title">Our Collections</h2>
-      
-      <div class="row g-4 mb-5">
-        <div class="col-lg-6">
-          <div class="category-card">
-            <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800" alt="Men's Collection">
-            <div class="category-overlay">
-              <h3>Men's Fashion</h3>
-              <p>Premium elegance for the modern gentleman</p>
-              <a href="#" class="btn btn-primary">Shop Men <i class="fas fa-arrow-right ms-2"></i></a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="category-card">
-            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800" alt="Women's Collection">
-            <div class="category-overlay">
-              <h3>Women's Fashion</h3>
-              <p>Sophisticated style for the contemporary woman</p>
-              <a href="#" class="btn btn-primary">Shop Women <i class="fas fa-arrow-right ms-2"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
+  {% load static %}
 
-      <!-- Image Gallery -->
-      <div class="image-gallery">
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?w=400" alt="Fashion 1">
+  <!-- Men's Wear Section -->
+  <section id="mens-wear" class="py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-5xl md:text-6xl font-bold text-center mb-16 tracking-tight">MEN'S WEAR</h2>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for product in data %}
+          {% if product.category == "Men" or product.category == "men" or product.category == "MEN" %}
+          <div class="group bg-white overflow-hidden transition-transform duration-300 hover:-translate-y-2">
+            <div class="relative overflow-hidden h-80">
+              <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+            
+            <div class="p-6 text-center border-t border-gray-200">
+              {% if product.badge %}
+              <span class="inline-block text-xs font-medium tracking-wider text-gray-500 mb-2">{{ product.badge }}</span>
+              {% endif %}
+              
+              <h3 class="text-sm font-medium mb-3 tracking-wide">{{ product.name }}</h3>
+              <p class="font-display text-2xl font-bold mb-4">${{ product.price }}</p>
+              
+              <button class="w-full px-4 py-2.5 bg-black text-white text-xs font-medium hover:bg-white hover:text-black border-2 border-black transition-all">
+                VIEW DETAILS
+              </button>
+            </div>
+          </div>
+          {% endif %}
+        {% empty %}
+        <div class="col-span-full text-center py-16">
+          <p class="text-gray-500 text-lg">No men's products available at the moment</p>
         </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=400" alt="Fashion 2">
-        </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400" alt="Fashion 3">
-        </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400" alt="Fashion 4">
-        </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400" alt="Fashion 5">
-        </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400" alt="Fashion 6">
-        </div>
+        {% endfor %}
       </div>
     </div>
   </section>
 
-  <!-- Products Section -->
-  <section id="products" class="section-container bg-light-custom">
-    <div class="container">
-      <h2 class="section-title">Premium Collection - All Brands</h2>
+  <!-- Women's Wear Section -->
+  <section id="womens-wear" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-5xl md:text-6xl font-bold text-center mb-16 tracking-tight">WOMEN'S WEAR</h2>
       
-      <div class="row g-4" id="productsContainer">
-        <!-- Nike Products -->
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Nike">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600" class="card-img-top" alt="Nike T-Shirt">
-            <div class="card-body">
-              <span class="brand-badge">Nike</span>
-              <h6 class="card-title">Nike Sport T-Shirt</h6>
-              <p class="price-tag">$40</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for product in data %}
+          {% if product.category == "Women" or product.category == "women" or product.category == "WOMEN" %}
+          <div class="group bg-white overflow-hidden transition-transform duration-300 hover:-translate-y-2">
+            <div class="relative overflow-hidden h-80">
+              <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+            
+            <div class="p-6 text-center border-t border-gray-200">
+              {% if product.badge %}
+              <span class="inline-block text-xs font-medium tracking-wider text-gray-500 mb-2">{{ product.badge }}</span>
+              {% endif %}
+              
+              <h3 class="text-sm font-medium mb-3 tracking-wide">{{ product.name }}</h3>
+              <p class="font-display text-2xl font-bold mb-4">${{ product.price }}</p>
+              
+              <button class="w-full px-4 py-2.5 bg-black text-white text-xs font-medium hover:bg-white hover:text-black border-2 border-black transition-all">
+                VIEW DETAILS
+              </button>
             </div>
           </div>
+          {% endif %}
+        {% empty %}
+        <div class="col-span-full text-center py-16">
+          <p class="text-gray-500 text-lg">No women's products available at the moment</p>
         </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Nike">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600" class="card-img-top" alt="Nike Shoes">
-            <div class="card-body">
-              <span class="brand-badge">Nike</span>
-              <h6 class="card-title">Nike Running Shoes</h6>
-              <p class="price-tag">$120</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Nike">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600" class="card-img-top" alt="Nike Jacket">
-            <div class="card-body">
-              <span class="brand-badge">Nike</span>
-              <h6 class="card-title">Nike Premium Jacket</h6>
-              <p class="price-tag">$85</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Nike">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=600" class="card-img-top" alt="Nike Shorts">
-            <div class="card-body">
-              <span class="brand-badge">Nike</span>
-              <h6 class="card-title">Nike Athletic Shorts</h6>
-              <p class="price-tag">$45</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Adidas Products -->
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Adidas">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600" class="card-img-top" alt="Adidas Jacket">
-            <div class="card-body">
-              <span class="brand-badge">Adidas</span>
-              <h6 class="card-title">Adidas Track Jacket</h6>
-              <p class="price-tag">$65</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Adidas">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600" class="card-img-top" alt="Adidas Shoes">
-            <div class="card-body">
-              <span class="brand-badge">Adidas</span>
-              <h6 class="card-title">Adidas Sneakers</h6>
-              <p class="price-tag">$95</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Adidas">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600" class="card-img-top" alt="Adidas Hoodie">
-            <div class="card-body">
-              <span class="brand-badge">Adidas</span>
-              <h6 class="card-title">Adidas Classic Hoodie</h6>
-              <p class="price-tag">$75</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Adidas">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600" class="card-img-top" alt="Adidas Pants">
-            <div class="card-body">
-              <span class="brand-badge">Adidas</span>
-              <h6 class="card-title">Adidas Sport Pants</h6>
-              <p class="price-tag">$55</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Puma Products -->
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Puma">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=600" class="card-img-top" alt="Puma Pants">
-            <div class="card-body">
-              <span class="brand-badge">Puma</span>
-              <h6 class="card-title">Puma Athletic Pants</h6>
-              <p class="price-tag">$50</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Puma">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600" class="card-img-top" alt="Puma Hoodie">
-            <div class="card-body">
-              <span class="brand-badge">Puma</span>
-              <h6 class="card-title">Puma Hoodie</h6>
-              <p class="price-tag">$60</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Puma">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600" class="card-img-top" alt="Puma Shoes">
-            <div class="card-body">
-              <span class="brand-badge">Puma</span>
-              <h6 class="card-title">Puma Running Shoes</h6>
-              <p class="price-tag">$110</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Puma">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=600" class="card-img-top" alt="Puma T-Shirt">
-            <div class="card-body">
-              <span class="brand-badge">Puma</span>
-              <h6 class="card-title">Puma Sport T-Shirt</h6>
-              <p class="price-tag">$42</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Levi's Products -->
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Levi's">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?w=600" class="card-img-top" alt="Levi's Jeans">
-            <div class="card-body">
-              <span class="brand-badge">Levi's</span>
-              <h6 class="card-title">Levi's Classic Jeans</h6>
-              <p class="price-tag">$70</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Levi's">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1582418702059-97ebaf8e0c0b?w=600" class="card-img-top" alt="Levi's Jacket">
-            <div class="card-body">
-              <span class="brand-badge">Levi's</span>
-              <h6 class="card-title">Levi's Denim Jacket</h6>
-              <p class="price-tag">$90</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Levi's">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600" class="card-img-top" alt="Levi's Shirt">
-            <div class="card-body">
-              <span class="brand-badge">Levi's</span>
-              <h6 class="card-title">Levi's Casual Shirt</h6>
-              <p class="price-tag">$58</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Levi's">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600" class="card-img-top" alt="Levi's Shorts">
-            <div class="card-body">
-              <span class="brand-badge">Levi's</span>
-              <h6 class="card-title">Levi's Denim Shorts</h6>
-              <p class="price-tag">$48</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Zara Products -->
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Zara">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1594938291221-94f18cbb8b8a?w=600" class="card-img-top" alt="Zara Shirt">
-            <div class="card-body">
-              <span class="brand-badge">Zara</span>
-              <h6 class="card-title">Zara Casual Shirt</h6>
-              <p class="price-tag">$55</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Zara">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1594633313593-bab3825d0caf?w=600" class="card-img-top" alt="Zara Dress">
-            <div class="card-body">
-              <span class="brand-badge">Zara</span>
-              <h6 class="card-title">Zara Elegant Dress</h6>
-              <p class="price-tag">$85</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Zara">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600" class="card-img-top" alt="Zara Blazer">
-            <div class="card-body">
-              <span class="brand-badge">Zara</span>
-              <h6 class="card-title">Zara Premium Blazer</h6>
-              <p class="price-tag">$125</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-brand="Zara">
-          <div class="product-card card">
-            <img src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=600" class="card-img-top" alt="Zara Pants">
-            <div class="card-body">
-              <span class="brand-badge">Zara</span>
-              <h6 class="card-title">Zara Formal Pants</h6>
-              <p class="price-tag">$68</p>
-              <a href="#" class="btn btn-primary btn-sm w-100">View Details</a>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </section>
 
-  <!-- Product Detail Section -->
-  <section class="section-container">
-    <div class="container">
-      <h2 class="section-title">Featured Product</h2>
+  <!-- Kids Wear Section -->
+  <section id="kids-wear" class="py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-5xl md:text-6xl font-bold text-center mb-16 tracking-tight">KIDS WEAR</h2>
       
-      <div class="row justify-content-center">
-        <div class="col-lg-10">
-          <div class="product-detail-card card">
-            <div class="row g-0">
-              <div class="col-md-6">
-                <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800" class="img-fluid" alt="Product">
-              </div>
-              <div class="col-md-6">
-                <div class="card-body">
-                  <span class="brand-badge mb-3">Nike</span>
-                  <h3 class="card-title fw-bold mb-3" style="font-family: 'Playfair Display', serif;">Men's Premium Casual Shirt</h3>
-                  <p class="text-muted mb-4">
-                    <i class="fas fa-tag me-2"></i>Brand: Nike | 
-                    <i class="fas fa-layer-group ms-2 me-2"></i>Category: Men
-                  </p>
-                  <h4 class="price-tag mb-4">$45.00</h4>
-                  <p class="card-text mb-4" style="color: var(--text-light); line-height: 1.8;">
-                    This premium quality casual shirt is made from breathable cotton fabric,
-                    offering comfort and style for everyday wear. Perfect for both casual and
-                    semi-formal occasions. Experience luxury in every thread.
-                  </p>
-                  <div class="d-grid gap-2">
-                    <button class="btn btn-primary btn-lg">
-                      <i class="fas fa-shopping-cart me-2"></i>Add to Cart
-                    </button>
-                    <button class="btn btn-outline-primary" style="border-color: var(--primary); color: var(--primary);">
-                      <i class="fas fa-heart me-2"></i>Add to Wishlist
-                    </button>
-                  </div>
-                </div>
-              </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for product in data %}
+          {% if product.category == "Kids" or product.category == "kids" or product.category == "KIDS" %}
+          <div class="group bg-white overflow-hidden transition-transform duration-300 hover:-translate-y-2">
+            <div class="relative overflow-hidden h-80">
+              <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+            
+            <div class="p-6 text-center border-t border-gray-200">
+              {% if product.badge %}
+              <span class="inline-block text-xs font-medium tracking-wider text-gray-500 mb-2">{{ product.badge }}</span>
+              {% endif %}
+              
+              <h3 class="text-sm font-medium mb-3 tracking-wide">{{ product.name }}</h3>
+              <p class="font-display text-2xl font-bold mb-4">${{ product.price }}</p>
+              
+              <button class="w-full px-4 py-2.5 bg-black text-white text-xs font-medium hover:bg-white hover:text-black border-2 border-black transition-all">
+                VIEW DETAILS
+              </button>
             </div>
           </div>
+          {% endif %}
+        {% empty %}
+        <div class="col-span-full text-center py-16">
+          <p class="text-gray-500 text-lg">No kids products available at the moment</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Comparison Section -->
-  <section class="section-container bg-light-custom">
-    <div class="container">
-      <h2 class="section-title">Compare Products</h2>
-      
-      <div class="comparison-table">
-        <div class="table-responsive">
-          <table class="table table-bordered mb-0">
-            <thead>
-              <tr>
-                <th>Features</th>
-                <th>Nike Sport T-Shirt</th>
-                <th>Adidas Track Shirt</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>Image</th>
-                <td>
-                  <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200" 
-                       alt="Nike Shirt" class="img-fluid">
-                </td>
-                <td>
-                  <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=200" 
-                       alt="Adidas Shirt" class="img-fluid">
-                </td>
-              </tr>
-              <tr>
-                <th>Brand</th>
-                <td>Nike</td>
-                <td>Adidas</td>
-              </tr>
-              <tr>
-                <th>Category</th>
-                <td>Men</td>
-                <td>Men</td>
-              </tr>
-              <tr>
-                <th>Price</th>
-                <td class="price-tag">$45</td>
-                <td class="price-tag">$40</td>
-              </tr>
-              <tr>
-                <th>Description</th>
-                <td>Comfortable cotton casual shirt with modern design</td>
-                <td>Lightweight breathable sports shirt for active wear</td>
-              </tr>
-              <tr>
-                <th>Action</th>
-                <td>
-                  <button class="btn btn-primary btn-sm">
-                    <i class="fas fa-cart-plus me-1"></i>Add to Cart
-                  </button>
-                </td>
-                <td>
-                  <button class="btn btn-primary btn-sm">
-                    <i class="fas fa-cart-plus me-1"></i>Add to Cart
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </section>
 
   <!-- Contact Section -->
-  <section id="contact" class="section-container">
-    <div class="container">
-      <h2 class="section-title">Contact Us</h2>
+  <section id="contact" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-5xl md:text-6xl font-bold text-center mb-16 tracking-tight">CONTACT US</h2>
       
-      <div class="row g-4 mb-4">
-        <div class="col-md-4">
-          <div class="contact-card card text-center">
-            <div class="card-body p-4">
-              <i class="fas fa-map-marker-alt contact-icon"></i>
-              <h5 class="card-title">Our Address</h5>
-              <p class="card-text">
-                FashionHub Store<br>
-                123 Fashion Street,<br>
-                New York, NY 10001
-              </p>
-            </div>
-          </div>
+      <div class="grid md:grid-cols-3 gap-8 mb-16">
+        <div class="bg-gray-50 p-8 text-center transition-transform duration-300 hover:-translate-y-2">
+          <div class="text-4xl mb-4">📍</div>
+          <h3 class="font-display text-xl font-bold mb-3 tracking-wide">LOCATION</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            123 Fashion Street<br>
+            New York, NY 10001<br>
+            United States
+          </p>
         </div>
         
-        <div class="col-md-4">
-          <div class="contact-card card text-center">
-            <div class="card-body p-4">
-              <i class="fas fa-envelope contact-icon"></i>
-              <h5 class="card-title">Email Us</h5>
-              <p class="card-text mb-3">For any inquiries, feel free to email us:</p>
-              <a href="mailto:info@fashionhub.com" class="btn btn-primary btn-sm">
-                info@fashionhub.com
-              </a>
-            </div>
-          </div>
+        <div class="bg-gray-50 p-8 text-center transition-transform duration-300 hover:-translate-y-2">
+          <div class="text-4xl mb-4">✉️</div>
+          <h3 class="font-display text-xl font-bold mb-3 tracking-wide">EMAIL</h3>
+          <p class="text-sm text-gray-600 mb-4">For inquiries and support</p>
+          <a href="mailto:info@fashionhub.com" class="text-sm font-medium border-b-2 border-black hover:text-gray-600 transition-colors">
+            info@fashionhub.com
+          </a>
         </div>
         
-        <div class="col-md-4">
-          <div class="contact-card card text-center">
-            <div class="card-body p-4">
-              <i class="fas fa-phone contact-icon"></i>
-              <h5 class="card-title">Call Us</h5>
-              <p class="card-text mb-3">We're here to help you:</p>
-              <a href="tel:+1234567890" class="btn btn-primary btn-sm">
-                <i class="fas fa-phone me-2"></i>+1 (234) 567-890
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Contact Images -->
-      <div class="row g-3">
-        <div class="col-md-4">
-          <div class="gallery-item" style="height: 300px;">
-            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600" 
-                 class="img-fluid" alt="Store 1">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="gallery-item" style="height: 300px;">
-            <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=600" 
-                 class="img-fluid" alt="Store 2">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="gallery-item" style="height: 300px;">
-            <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600" 
-                 class="img-fluid" alt="Store 3">
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Admin Panel -->
-  <section class="section-container bg-light-custom">
-    <div class="container">
-      <div class="admin-panel">
-        <h2 class="section-title mb-4">Admin Panel – Manage Products</h2>
-        
-        <div class="admin-form">
-          <h5 class="fw-bold mb-4 text-primary">
-            <i class="fas fa-plus-circle me-2"></i>Add / Update Product
-          </h5>
-          <form>
-            <div class="row mb-3">
-              <div class="col-md-6 mb-3 mb-md-0">
-                <label class="form-label">Product Name</label>
-                <input type="text" class="form-control" placeholder="Enter product name">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Brand</label>
-                <input type="text" class="form-control" placeholder="Enter brand">
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-md-6 mb-3 mb-md-0">
-                <label class="form-label">Price</label>
-                <input type="number" class="form-control" placeholder="Enter price">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Category</label>
-                <select class="form-select">
-                  <option>Men</option>
-                  <option>Women</option>
-                  <option>Unisex</option>
-                </select>
-              </div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Description</label>
-              <textarea class="form-control" rows="3" placeholder="Enter product description"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">
-              <i class="fas fa-save me-2"></i>Save Product
-            </button>
-          </form>
-        </div>
-
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title fw-bold mb-4 text-primary">
-              <i class="fas fa-list me-2"></i>Product List
-            </h5>
-            <div class="table-responsive">
-              <table class="table table-bordered text-center align-middle">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Brand</th>
-                    <th>Price</th>
-                    <th>Category</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Men Casual Shirt</td>
-                    <td>Nike</td>
-                    <td class="price-tag">$45</td>
-                    <td>Men</td>
-                    <td>
-                      <button class="btn btn-warning btn-sm me-2">
-                        <i class="fas fa-edit"></i> Edit
-                      </button>
-                      <button class="btn btn-danger btn-sm">
-                        <i class="fas fa-trash"></i> Delete
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Women Jacket</td>
-                    <td>Adidas</td>
-                    <td class="price-tag">$65</td>
-                    <td>Women</td>
-                    <td>
-                      <button class="btn btn-warning btn-sm me-2">
-                        <i class="fas fa-edit"></i> Edit
-                      </button>
-                      <button class="btn btn-danger btn-sm">
-                        <i class="fas fa-trash"></i> Delete
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+        <div class="bg-gray-50 p-8 text-center transition-transform duration-300 hover:-translate-y-2">
+          <div class="text-4xl mb-4">📞</div>
+          <h3 class="font-display text-xl font-bold mb-3 tracking-wide">PHONE</h3>
+          <p class="text-sm text-gray-600 mb-4">We're here to help you</p>
+          <a href="tel:+1234567890" class="text-sm font-medium border-b-2 border-black hover:text-gray-600 transition-colors">
+            +1 (234) 567-890
+          </a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4 mb-4 mb-md-0">
-          <h5>FashionHub</h5>
-          <p>Your trusted destination for premium luxury fashion and style.</p>
+  <footer class="bg-black text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-3 gap-12 mb-12">
+        <div>
+          <h3 class="font-display text-2xl font-bold mb-4 tracking-wider">FASHIONHUB</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">Premium luxury fashion and timeless style for the modern individual.</p>
         </div>
-        <div class="col-md-4 mb-4 mb-md-0">
-          <h5>Quick Links</h5>
-          <ul class="list-unstyled">
-            <li class="mb-2"><a href="#">About Us</a></li>
-            <li class="mb-2"><a href="#">Privacy Policy</a></li>
-            <li class="mb-2"><a href="#">Terms & Conditions</a></li>
+        
+        <div>
+          <h4 class="font-medium text-sm mb-4 tracking-wider">QUICK LINKS</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Terms & Conditions</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Shipping Info</a></li>
           </ul>
         </div>
-        <div class="col-md-4">
-          <h5>Follow Us</h5>
-          <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
+        
+        <div>
+          <h4 class="font-medium text-sm mb-4 tracking-wider">FOLLOW US</h4>
+          <div class="flex space-x-4">
+            <a href="#" class="w-10 h-10 flex items-center justify-center border border-white hover:bg-white hover:text-black transition-all">F</a>
+            <a href="#" class="w-10 h-10 flex items-center justify-center border border-white hover:bg-white hover:text-black transition-all">I</a>
+            <a href="#" class="w-10 h-10 flex items-center justify-center border border-white hover:bg-white hover:text-black transition-all">T</a>
           </div>
         </div>
       </div>
-      <hr class="my-4" style="border-color: rgba(255, 255, 255, 0.2);">
-      <div class="text-center">
-        <p class="mb-0">&copy; 2024 FashionHub. All rights reserved.</p>
+      
+      <div class="border-t border-gray-800 pt-8 text-center">
+        <p class="text-sm text-gray-400">&copy; 2024 FASHIONHUB. ALL RIGHTS RESERVED.</p>
       </div>
     </div>
   </footer>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+          // Close mobile menu if open
+          mobileMenu.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>

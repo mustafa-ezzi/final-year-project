@@ -1,3 +1,5 @@
+Mustafa: i have done the template work and product thing, insert product, view, update, and delete product things 
+
 Team Task Breakdown
 
 
@@ -58,7 +60,7 @@ urls.py
 
 Module/Folder:
 
-employee_register
+user_register
 
 Branch:
 feature/shabbir

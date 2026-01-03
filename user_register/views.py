@@ -1,10 +1,13 @@
 from django.shortcuts import render
-from employee_register import views
-from employee_register.models import Customer
+from products.models import Product
+from user_register import views
+from user_register.models import Customer
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    data = Product.objects.all()
+    context = {'data': data}  # send to index.html
+    return render(request, 'index.html', context)
 
 def view(request):
     return render(request, 'view.html')
