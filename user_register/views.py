@@ -1,52 +1,70 @@
-from django.shortcuts import render
-from products.models import Product
-from user_register import views
-from user_register.models import Customer
-# Create your views here.
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Customer
 
-def index(request):
-    data = Product.objects.all()
-    context = {'data': data}  # send to index.html
-    return render(request, 'index.html', context)
 
-def view(request):
-    return render(request, 'view.html')
-
-def insertData(request):
+# ---------- REGISTER ----------
+def register(request):
     if request.method == "POST":
         name = request.POST.get("name")
         email = request.POST.get("email")
-        password = request.POST.get("password")
-        print(name, email, password)
-        query=Customer(name=name,email=email,password=password)
-        query.save()
-    return render(request, 'index.html')
+        phone_number = request.POST.get("phone_number")
 
-def viewData(request):
-    
-    data=Customer.objects.all()
-    context = {'data': data}
-    return render(request, "view.html",context)
+        if not name or not email or not phone_number:
+            messages.error(request, "All fields are required")
+            return render(request, "register.html")
 
-def updateData(request, id):
+        if Customer.objects.filter(email=email).exists():
+            messages.error(request, "Email already exists")
+            return render(request, "register.html")
+
+        if Customer.objects.filter(phone_number=phone_number).exists():
+            messages.error(request, "Phone number already exists")
+            return render(request, "register.html")
+
+        Customer.objects.create(
+            name=name,
+            email=email,
+            phone_number=phone_number
+        )
+
+        messages.success(request, "Registration successful")
+        return redirect("login")
+
+    return render(request, "register.html")
+
+
+# ---------- LOGIN ----------
+def login(request):
     if request.method == "POST":
-        name = request.POST["name"]
-        email = request.POST["email"]
-        password = request.POST["password"]
-        edit = Customer.objects.get(id=id)
-        edit.name = name
-        edit.email = email
-        edit.password = password
-        edit.save()
-        return viewData(request)
-        
-    d = Customer.objects.get(id=id)
-    
-    context = {'d': d}
-    return render(request, "update.html", context)
+        email = request.POST.get("email")
+        phone_number = request.POST.get("phone_number")
+
+        if not email and not phone_number:
+            messages.error(request, "Email or Phone number required")
+            return render(request, "login.html")
+
+        user = None
+        if email:
+            user = Customer.objects.filter(email=email).first()
+        elif phone_number:
+            user = Customer.objects.filter(phone_number=phone_number).first()
+
+        if not user:
+            messages.error(request, "User not found")
+            return render(request, "login.html")
+
+        # simple session
+        request.session["customer_id"] = user.id
+        request.session["customer_name"] = user.name
+
+        messages.success(request, "Login successful")
+        return redirect("index")
+
+    return render(request, "login.html")
 
 
-def deletData(request,id):
-    d =  Customer.objects.get(id=id)
-    d.delete()
-    return viewData(request)
+# ---------- LOGOUT ----------
+def logout(request):
+    request.session.flush()
+    return redirect("login")

@@ -17,7 +17,7 @@ Email
 
 Phone Number
 
-Password
+phone_number
 
 UI Guidelines:
 
@@ -48,7 +48,7 @@ Email
 
 Phone Number
 
-Password
+phone_number
 
 Files to be updated:
 
