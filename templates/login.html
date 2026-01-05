@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FashionHub Admin Login</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-black min-h-screen flex items-center justify-center text-white">
+
+  <!-- Card -->
+  <div class="w-full max-w-md bg-zinc-900 border border-zinc-700 rounded-xl shadow-2xl p-10">
+
+    <!-- Title -->
+    <h2 class="text-center text-2xl font-semibold tracking-wide">
+      ADMIN LOGIN
+    </h2>
+    <p class="text-center text-sm text-zinc-400 mt-1 mb-8">
+      FashionHub Management
+    </p>
+
+    <!-- Form -->
+    <form action="/insertData" method="post" class="space-y-5">
+      {% csrf_token %}
+
+      <!-- Name -->
+      <div>
+        <label class="block text-sm text-zinc-400 mb-1">Name</label>
+        <input
+          type="text"
+          name="name"
+          maxlength="15"
+          required
+          placeholder="Admin name"
+          class="w-full px-4 py-3 bg-black border border-zinc-700 rounded-md
+                 text-white placeholder-zinc-500 focus:outline-none
+                 focus:border-white transition"
+        >
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="block text-sm text-zinc-400 mb-1">Email</label>
+        <input
+          type="email"
+          name="email"
+          required
+          placeholder="admin@fashionhub.com"
+          class="w-full px-4 py-3 bg-black border border-zinc-700 rounded-md
+                 text-white placeholder-zinc-500 focus:outline-none
+                 focus:border-white transition"
+        >
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label class="block text-sm text-zinc-400 mb-1">Password</label>
+        <input
+          type="number"
+          name="password"
+          required
+          placeholder="Numeric password"
+          class="w-full px-4 py-3 bg-black border border-zinc-700 rounded-md
+                 text-white placeholder-zinc-500 focus:outline-none
+                 focus:border-white transition"
+        >
+      </div>
+
+      <!-- Button -->
+      <button
+        type="submit"
+        class="w-full mt-6 py-3 bg-white text-black font-semibold
+               rounded-full hover:bg-zinc-200 transition">
+        Login
+      </button>
+
+    </form>
+  </div>
+
+</body>
+</html>
