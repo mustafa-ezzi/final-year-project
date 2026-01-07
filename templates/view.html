@@ -1,108 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% load static %}
   <meta charset="UTF-8">
-  <title>Luxury Product | Fashion Hub</title>
+  <title>{{ product.name }} | ThreadStory</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Tailwind CDN -->
+  <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gradient-to-br from-gray-100 via-gray-200 to-gray-100">
+<body class="bg-gradient-to-br from-[#0f0f0f] via-[#141414] to-black text-gray-200">
 
 <!-- Main Container -->
-<div class="max-w-7xl mx-auto px-6 py-12">
+<div class="max-w-7xl mx-auto px-6 py-16">
 
   <!-- Breadcrumb -->
-  <p class="text-sm text-gray-500 mb-8 tracking-wide">
-    Home / Men / Jackets /
-    <span class="text-black font-semibold">Luxury Denim Jacket</span>
+  <p class="text-sm text-gray-500 mb-10 tracking-wide">
+    Home / {{ product.category }} /
+    <span class="text-white font-semibold">{{ product.name }}</span>
   </p>
 
   <!-- Product Card -->
-  <div class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-[0_40px_120px_rgba(0,0,0,0.15)] p-8">
+  <div class="bg-white/5 backdrop-blur-xl rounded-3xl shadow-[0_40px_120px_rgba(0,0,0,0.7)] p-10">
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
 
       <!-- Image Section -->
       <div class="relative group">
-        <div class="absolute -inset-1 bg-gradient-to-r from-black to-gray-600 rounded-3xl blur opacity-25 group-hover:opacity-50 transition"></div>
+        <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 to-gray-600 rounded-3xl blur opacity-30 group-hover:opacity-60 transition"></div>
         
-        <img src="https://via.placeholder.com/700x850"
+        <img src="{{ product.image.url }}"
              class="relative w-full rounded-3xl shadow-2xl transform group-hover:scale-105 transition duration-500 object-cover"
-             alt="Luxury Jacket">
+             alt="{{ product.name }}">
       </div>
 
       <!-- Details Section -->
       <div class="flex flex-col justify-center">
 
-        <!-- Brand -->
-        <span class="inline-block w-fit text-xs tracking-widest bg-black text-white px-4 py-1 rounded-full uppercase">
-          Levis Premium
+        <!-- Badge -->
+        {% if product.badge %}
+        <span class="inline-block w-fit text-xs tracking-widest bg-amber-500 text-black px-4 py-1 rounded-full uppercase font-semibold">
+          {{ product.badge }}
         </span>
+        {% endif %}
 
         <!-- Title -->
-        <h1 class="text-4xl font-extrabold mt-6 tracking-tight text-gray-900">
-          Men Luxury Denim Jacket
+        <h1 class="text-4xl lg:text-5xl font-extrabold mt-6 tracking-tight text-white">
+          {{ product.name }}
         </h1>
 
-        <!-- Rating -->
-        <div class="flex items-center gap-2 mt-3">
-          <div class="flex text-yellow-400">
-            ★ ★ ★ ★ ★
-          </div>
-          <span class="text-sm text-gray-500">(128 Reviews)</span>
-        </div>
+        <!-- Category -->
+        <p class="mt-2 text-sm uppercase tracking-widest text-gray-400">
+          {{ product.category }} Collection
+        </p>
 
         <!-- Price -->
-        <p class="text-3xl font-bold text-emerald-600 mt-6">
-          Rs. 5,500
-          <span class="text-sm text-gray-400 line-through ml-2">Rs. 7,000</span>
+        <p class="text-3xl font-bold text-emerald-400 mt-8">
+          Rs. {{ product.price }}
         </p>
 
         <!-- Description -->
-        <p class="text-gray-600 mt-6 leading-relaxed">
-          Crafted with premium denim fabric, this luxury jacket delivers 
-          elegance, comfort, and durability. Designed for modern fashion 
-          lovers who value quality and style.
+        <p class="text-gray-400 mt-6 leading-relaxed text-lg">
+          {{ product.description }}
         </p>
 
-        <!-- Features -->
-        <ul class="mt-6 space-y-2 text-gray-600">
-          <li>✔ Premium imported denim</li>
-          <li>✔ Slim luxury fit</li>
-          <li>✔ All-season wear</li>
-          <li>✔ High durability stitching</li>
+        <!-- Features (static luxury perks) -->
+        <ul class="mt-8 space-y-3 text-gray-400">
+          <li>✔ Premium fabric & finishing</li>
+          <li>✔ Tailored luxury fit</li>
+          <li>✔ All-season comfort</li>
+          <li>✔ ThreadStory quality assurance</li>
         </ul>
 
-        <!-- Size -->
-        <div class="mt-8">
-          <h3 class="font-semibold mb-3 text-gray-900">Select Size</h3>
+        <!-- Size (UI only – optional backend later) -->
+        <div class="mt-10">
+          <h3 class="font-semibold mb-4 text-white">Select Size</h3>
           <div class="flex gap-4">
-            <button class="px-5 py-2 rounded-xl border hover:bg-black hover:text-white transition">S</button>
-            <button class="px-5 py-2 rounded-xl border hover:bg-black hover:text-white transition">M</button>
-            <button class="px-5 py-2 rounded-xl border hover:bg-black hover:text-white transition">L</button>
-            <button class="px-5 py-2 rounded-xl border hover:bg-black hover:text-white transition">XL</button>
+            <button class="px-5 py-2 rounded-xl border border-gray-600 hover:bg-white hover:text-black transition">S</button>
+            <button class="px-5 py-2 rounded-xl border border-gray-600 hover:bg-white hover:text-black transition">M</button>
+            <button class="px-5 py-2 rounded-xl border border-gray-600 hover:bg-white hover:text-black transition">L</button>
+            <button class="px-5 py-2 rounded-xl border border-gray-600 hover:bg-white hover:text-black transition">XL</button>
           </div>
         </div>
 
         <!-- Buttons -->
-        <div class="flex gap-6 mt-10">
-          <button class="flex-1 bg-black text-white py-4 rounded-2xl shadow-lg hover:shadow-2xl hover:scale-[1.02] transition">
+        <div class="flex gap-6 mt-12">
+                      <a href="{% url 'add_to_cart' product.id %}">
+
+          <button class="flex-1 bg-white text-black py-4 rounded-2xl font-semibold shadow-lg hover:scale-[1.03] transition">
             Add to Cart
           </button>
+          </a>
 
-          <button class="flex-1 border-2 border-black py-4 rounded-2xl hover:bg-black hover:text-white transition">
+          <button class="flex-1 border-2 border-white py-4 rounded-2xl hover:bg-white hover:text-black transition font-semibold">
             Buy Now
           </button>
         </div>
 
         <!-- Trust Badges -->
-        <div class="flex gap-6 mt-8 text-sm text-gray-500">
+        <div class="flex gap-8 mt-10 text-sm text-gray-500">
           <span>🚚 Free Shipping</span>
           <span>🔄 Easy Returns</span>
-          <span>🔒 Secure Payment</span>
+          <span>🔒 Secure Checkout</span>
         </div>
 
       </div>
