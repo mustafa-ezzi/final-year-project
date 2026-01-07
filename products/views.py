@@ -7,6 +7,18 @@ def index(request):
     context = {'data': data}
     return render(request, 'admin.html', context)
 
+def home(request):
+    men = Product.objects.filter(category__iexact="Men")
+    women = Product.objects.filter(category__iexact="Women")
+    kids = Product.objects.filter(category__iexact="Kids")
+
+    context = {
+        "men": men,
+        "women": women,
+        "kids": kids,
+    }
+    return render(request, "index.html", context)
+
 
 # ---------------- INSERT ----------------
 def insertData(request):
@@ -54,3 +66,12 @@ def deleteData(request, id):
     product = Product.objects.get(id=id)
     product.delete()
     return redirect('index')
+
+
+def viewProduct(request, id):
+    product = get_object_or_404(Product, id=id)
+
+    context = {
+        "product": product
+    }
+    return render(request, "view.html", context)

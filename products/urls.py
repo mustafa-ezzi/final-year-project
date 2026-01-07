@@ -4,10 +4,12 @@ from . import views
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin-panel/', views.index, name='index'),
-    path('insert/', views.insertData, name='insert'),
-    path('update/<int:id>/', views.updateData, name='update'),
-    path('delete/<int:id>/', views.deleteData, name='delete'),
+    path("admin-panel/", views.index, name="index"),
+    path("", views.home),
+    path("insert/", views.insertData, name="insert"),
+    path("update/<int:id>/", views.updateData, name="update"),
+    path("delete/<int:id>/", views.deleteData, name="delete"),
+    path("product/<int:id>/", views.viewProduct, name="view-product"),
 ]
 
 if settings.DEBUG:
