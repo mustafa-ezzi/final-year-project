@@ -1,93 +1,208 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FashionHub Admin Login</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FashionHub | Elite Admin</title>
 
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-    }
-  </style>
+<style>
+/* ===== GLOBAL ===== */
+body{
+  font-family:'Poppins', sans-serif;
+  background:
+    linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.9)),
+    url("https://images.unsplash.com/photo-1521335629791-ce4aec67dd47?auto=format&fit=crop&w=1600&q=80")
+    center/cover no-repeat fixed;
+  min-height:100vh;
+  color:#fff;
+  overflow:hidden;
+}
+
+/* Soft animated overlay */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(233, 214, 214, 0.08), transparent 40%),
+    radial-gradient(circle at 70% 80%, rgba(255,255,255,.05), transparent 40%);
+  animation: floatBg 20s linear infinite;
+}
+@keyframes floatBg{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-30px)}
+  100%{transform:translateY(0)}
+}
+
+/* Navbar */
+.navbar-brand{
+  font-family:'Playfair Display', serif;
+  letter-spacing:3px;
+  color:#f3f2f2 !important;
+}
+
+/* 3D Scene */
+.scene{ perspective:1400px; }
+
+/* Card */
+.lux-card{
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(20px);
+  border-radius:1.3rem;
+  border:1px solid rgba(240, 225, 225, 0.705);
+  box-shadow:
+    0 40px 90px rgba(0,0,0,.95),
+    inset 0 0 40px rgba(255,255,255,.05);
+  transform-style:preserve-3d;
+  transition:.7s cubic-bezier(.22,1,.36,1);
+  position:relative;
+  overflow:hidden;
+}
+.lux-card:hover{
+  transform:rotateX(6deg) rotateY(-6deg) translateY(-10px);
+  box-shadow:
+    0 70px 130px rgba(0,0,0,1),
+    0 0 40px rgba(189, 190, 189, 0.35);
+}
+
+/* Animated white border */
+.lux-card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:linear-gradient(120deg,transparent,#f5faf1a8,transparent);
+  opacity:.12;
+  animation:borderMove 6s linear infinite;
+}
+@keyframes borderMove{
+  0%{transform:translateX(-100%)}
+  100%{transform:translateX(100%)}
+}
+
+/* Headings */
+.text-white-soft{ color:#eee6e6; }
+.brand-title{
+  font-family:'Playfair Display', serif;
+  letter-spacing:1px;
+}
+
+/* Inputs */
+.form-control,
+.form-select{
+  background:rgba(0,0,0,.85);
+  border:1px solid #444;
+  color:#f7f0f0;
+  padding:1rem;
+}
+.form-control:focus,
+.form-select:focus{
+  background:#585757;
+  border-color:hsl(0, 53%, 94%);
+  box-shadow:0 0 0 .2rem rgba(255,255,255,.25);
+}
+
+/* Button */
+.lux-btn{
+  background:linear-gradient(135deg,#e7dfdf,#dcdcdc,#9e9e9e);
+  color:#0a0303;
+  letter-spacing:1px;
+  transition:.4s;
+  box-shadow:0 20px 40px rgba(255,255,255,.35);
+}
+.lux-btn:hover{
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:0 35px 70px rgba(255,255,255,.55);
+}
+.login-wrap{
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.login-wrap{
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+/* Footer text */
+.subtext{
+  font-size:.9rem;
+  opacity:.6;
+}
+</style>
 </head>
 
-<body class="bg-black min-h-screen flex items-center justify-center text-white">
+<body>
 
-  <!-- Card -->
-  <div class="w-full max-w-md bg-zinc-900 border border-zinc-700 rounded-xl shadow-2xl p-10">
-
-    <!-- Title -->
-    <h2 class="text-center text-2xl font-semibold tracking-wide">
-      ADMIN LOGIN
-    </h2>
-    <p class="text-center text-sm text-zinc-400 mt-1 mb-8">
-      FashionHub Management
-    </p>
-
-    <!-- Form -->
-    <form action="/insertData" method="post" class="space-y-5">
-      {% csrf_token %}
-
-      <!-- Name -->
-      <div>
-        <label class="block text-sm text-zinc-400 mb-1">Name</label>
-        <input
-          type="text"
-          name="name"
-          maxlength="15"
-          required
-          placeholder="Admin name"
-          class="w-full px-4 py-3 bg-black border border-zinc-700 rounded-md
-                 text-white placeholder-zinc-500 focus:outline-none
-                 focus:border-white transition"
-        >
-      </div>
-
-      <!-- Email -->
-      <div>
-        <label class="block text-sm text-zinc-400 mb-1">Email</label>
-        <input
-          type="email"
-          name="email"
-          required
-          placeholder="admin@fashionhub.com"
-          class="w-full px-4 py-3 bg-black border border-zinc-700 rounded-md
-                 text-white placeholder-zinc-500 focus:outline-none
-                 focus:border-white transition"
-        >
-      </div>
-
-      <!-- Password -->
-      <div>
-        <label class="block text-sm text-zinc-400 mb-1">Password</label>
-        <input
-          type="number"
-          name="password"
-          required
-          placeholder="Numeric password"
-          class="w-full px-4 py-3 bg-black border border-zinc-700 rounded-md
-                 text-white placeholder-zinc-500 focus:outline-none
-                 focus:border-white transition"
-        >
-      </div>
-
-      <!-- Button -->
-      <button
-        type="submit"
-        class="w-full mt-6 py-3 bg-white text-black font-semibold
-               rounded-full hover:bg-zinc-200 transition">
-        Login
-      </button>
-
-    </form>
+<!-- Navbar -->
+<nav class="navbar navbar-dark bg-black shadow-lg py-4">
+  <div class="container">
+    <a class="navbar-brand fw-bold fs-3" href="#">FASHIONHUB 👖</a>
   </div>
+</nav>
 
+<!-- Login -->
+<div class="container my-5 scene">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+       <div class="container login-wrap scene">
+
+      <div class="lux-card p-2  ">
+        
+        <h2 class="text-center brand-title text-white-soft mb-2">
+          LOGIN PAGE ☺
+        </h2>
+        <p class="text-center text-secondary mb-4">
+          Global Fashion Authority 👀
+        </p>
+
+        <form method="post" action="/insertData">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <input type="text" name="name" class="form-control form-control-lg"
+            placeholder="Admin Name" required>
+            
+          </div>
+
+          <div class="mb-3">
+            <input type="email" name="email" class="form-control form-control-lg"
+            placeholder="admin@fashionhub.com" required>
+          </div>
+
+          <div class="mb-3">
+            <input type="password" name="password" class="form-control form-control-lg"
+            placeholder="Secure Password" required>
+          </div>
+
+          <div class="mb-4">
+            <select class="form-select form-select-lg" name="gender" required>
+              <option disabled selected>Select Gender</option>
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </div>
+
+          <div class="d-grid">
+            <button class="btn lux-btn btn-lg fw-bold rounded-pill">
+              Sign Up
+            </button>
+          </div>
+        </form>
+
+        <p class="text-center mt-4 subtext">
+          © 2026 FashionHub — Luxury Redefined
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
