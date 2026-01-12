@@ -9,9 +9,13 @@ def register(request):
         name = request.POST.get("name")
         email = request.POST.get("email")
         phone_number = request.POST.get("phone_number")
+        address = request.POST.get("address")
+        city = request.POST.get("city")
+        state = request.POST.get("state")
+        zip_code = request.POST.get("zip_code")
 
         if not name or not email or not phone_number:
-            messages.error(request, "All fields are required")
+            messages.error(request, "Name, Email, and Phone are required")
             return render(request, "register.html")
 
         if Customer.objects.filter(email=email).exists():
@@ -25,7 +29,11 @@ def register(request):
         Customer.objects.create(
             name=name,
             email=email,
-            phone_number=phone_number
+            phone_number=phone_number,
+            address=address,
+            city=city,
+            state=state,
+            zip_code=zip_code,
         )
 
         messages.success(request, "Registration successful")
