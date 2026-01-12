@@ -1,15 +1,31 @@
 # user_register/models.py
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.validators import RegexValidator
 from django.db import models
 
 
-class Customer(AbstractUser):
-    # Remove username if you don't want to use it
-    username = None
-    USERNAME_FIELD = "email"  # login with email
-    REQUIRED_FIELDS = ["name"]  # fields required when creating superuser
+class CustomerManager(BaseUserManager):
+    use_in_migrations = True
 
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError("Email is required")
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        return self.create_user(email, password, **extra_fields)
+
+
+class Customer(AbstractUser):
+    username = None  # remove username
+
+    email = models.EmailField(unique=True)
     name = models.CharField(max_length=120)
 
     phone_regex = RegexValidator(
@@ -25,9 +41,14 @@ class Customer(AbstractUser):
     state = models.CharField(max_length=100, blank=True, null=True)
     zip_code = models.CharField(max_length=20, blank=True, null=True)
 
-    # Timestamps (optional but useful)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["name"]
+
+    objects = CustomerManager()
+
     def __str__(self):
-        return self.email or self.name
+        return self.email
+
