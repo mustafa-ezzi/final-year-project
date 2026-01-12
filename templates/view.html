@@ -83,20 +83,28 @@
             <button class="px-5 py-2 rounded-xl border border-gray-600 hover:bg-white hover:text-black transition">XL</button>
           </div>
         </div>
+<!-- Buttons -->
+<div class="flex gap-6 mt-12">
+  <a href="{% url 'add_to_cart' product.id %}">
+    <button
+      class="flex-1 bg-white text-black py-4 px-5 rounded-2xl
+             font-medium border border-gray-200
+             shadow-md hover:shadow-lg
+             transition-all duration-300">
+      Add to Cart
+    </button>
+  </a>
 
-        <!-- Buttons -->
-        <div class="flex gap-6 mt-12">
-                      <a href="{% url 'add_to_cart' product.id %}">
+  <button
+    class="flex-1 border-2 border-white py-4 rounded-2xl
+           font-semibold text-white
+           hover:bg-white hover:text-black
+           shadow-md hover:shadow-lg
+           transition-all duration-300">
+    Buy Now
+  </button>
+</div>
 
-          <button class="flex-1 bg-white text-black py-4 rounded-2xl font-semibold shadow-lg hover:scale-[1.03] transition">
-            Add to Cart
-          </button>
-          </a>
-
-          <button class="flex-1 border-2 border-white py-4 rounded-2xl hover:bg-white hover:text-black transition font-semibold">
-            Buy Now
-          </button>
-        </div>
 
         <!-- Trust Badges -->
         <div class="flex gap-8 mt-10 text-sm text-gray-500">
