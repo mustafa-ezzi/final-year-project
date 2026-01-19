@@ -8,38 +8,56 @@ import json
 
 # ---------------- CART DETAIL ----------------
 def cart_detail(request):
-    customer_id = request.session.get("customer_id")
-    if not customer_id:
-        return redirect("login")
+    session_cart = request.session.get("cart", {})
+    items = []
+    total = 0
 
-    customer = Customer.objects.get(id=customer_id)
-    cart, created = Cart.objects.get_or_create(user=customer)
-    return render(request, "cart_detail.html", {"cart": cart})
+    for product_id, qty in session_cart.items():
+        product = Product.objects.get(id=product_id)
+        subtotal = product.price * qty
+        total += subtotal
+
+        items.append({
+            "product": product,
+            "quantity": qty,
+            "subtotal": subtotal,
+            "product_id": product.id,
+        })
+
+    return render(request, "cart_detail.html", {
+        "items": items,
+        "total": total,
+    })
 
 
 # ---------------- ADD TO CART ----------------
 def add_to_cart(request, product_id):
-    customer_id = request.session.get("customer_id")
-    if not customer_id:
-        return redirect("login")
+    cart = request.session.get("cart", {})
 
-    customer = Customer.objects.get(id=customer_id)
-    product = get_object_or_404(Product, id=product_id)
-    cart, created = Cart.objects.get_or_create(user=customer)
+    product_id = str(product_id)
 
-    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
-    if not created:
-        cart_item.quantity += 1
-    cart_item.save()
+    if product_id in cart:
+        cart[product_id] += 1
+    else:
+        cart[product_id] = 1
+
+    request.session["cart"] = cart
+    request.session.modified = True
 
     return redirect("cart_detail")
 
 
 # ---------------- REMOVE ITEM ----------------
-def remove_from_cart(request, item_id):
-    cart_item = get_object_or_404(CartItem, id=item_id)
-    cart_item.delete()
+def remove_from_cart(request, product_id):
+    cart = request.session.get("cart", {})
+    product_id = str(product_id)
+
+    if product_id in cart:
+        del cart[product_id]
+
+    request.session["cart"] = cart
     return redirect("cart_detail")
+
 
 
 # ---------------- UPDATE QUANTITY ----------------
@@ -68,61 +86,66 @@ def update_cart_item(request, item_id):
 
 # ---------------- CHECKOUT ----------------
 def checkout(request):
+    # 1. Require login
     customer_id = request.session.get("customer_id")
     if not customer_id:
         return redirect("login")
 
     customer = get_object_or_404(Customer, id=customer_id)
-    cart, _ = Cart.objects.get_or_create(user=customer)
 
-    if not cart.items.exists():
-        return redirect("cart_detail")  # no items → back to cart
+    # 2. Get session cart
+    session_cart = request.session.get("cart", {})
+    if not session_cart:
+        return redirect("cart_detail")
 
+    # 3. Create / get DB cart
+    cart, created = Cart.objects.get_or_create(user=customer)
+
+    # 4. Sync session cart → DB cart
+    cart.items.all().delete()  # prevent duplicates
+
+    total = 0
+    for product_id, qty in session_cart.items():
+        product = Product.objects.get(id=product_id)
+        CartItem.objects.create(
+            cart=cart,
+            product=product,
+            quantity=qty
+        )
+        total += product.price * qty
+
+    # 5. POST → place order
     if request.method == "POST":
-        try:
-            data = json.loads(request.body)
+        data = json.loads(request.body)
 
-            # Create Order
-            order = Order.objects.create(
-                user=customer,  # assuming Customer is your user model or adjust
-                shipping_address=data.get("address", ""),
-                city=data.get("city", ""),
-                state=data.get("state", ""),
-                zip_code=data.get("zip", ""),
-                total_amount=cart.total_price(),
+        order = Order.objects.create(
+            user=customer,
+            shipping_address=data.get("address", ""),
+            city=data.get("city", ""),
+            state=data.get("state", ""),
+            zip_code=data.get("zip", ""),
+            total_amount=total,
+        )
+
+        for item in cart.items.all():
+            OrderItem.objects.create(
+                order=order,
+                product=item.product,
+                price=item.product.price,
+                quantity=item.quantity,
             )
 
-            # Create OrderItems from CartItems
-            for item in cart.items.all():
-                OrderItem.objects.create(
-                    order=order,
-                    product=item.product,
-                    price=item.product.price,  # snapshot
-                    quantity=item.quantity,
-                )
+        # Clear both carts
+        cart.items.all().delete()
+        del request.session["cart"]
 
-            # Clear cart after successful order creation
-            cart.items.all().delete()
+        return JsonResponse({
+            "success": True,
+            "order_id": order.id
+        })
 
-            # In real app: here you would redirect to payment gateway
-            # For now: success message / thank you page
-            return JsonResponse(
-                {
-                    "success": True,
-                    "message": "Order placed successfully!",
-                    "order_id": order.id,
-                }
-            )
-
-        except Exception as e:
-            return JsonResponse({"success": False, "message": str(e)}, status=400)
-
-    # GET: show checkout form
-    return render(
-        request,
-        "checkout.html",
-        {
-            "cart": cart,
-            "customer": customer,  # prefill form if you want
-        },
-    )
+    # 6. GET → show checkout page
+    return render(request, "checkout.html", {
+        "cart": cart,
+        "customer": customer
+    })
