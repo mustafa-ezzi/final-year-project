@@ -4,7 +4,8 @@ from django.db import models
 
 
 class Customer(models.Model):
-    name = models.CharField(max_length=120)
+    first_name = models.CharField(max_length=120)
+    second_name = models.CharField(max_length=120)
 
     phone_regex = RegexValidator(
         regex=r"^((\+92)|(0092))?-?0?3\d{2}-?\d{7}$",
