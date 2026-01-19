@@ -1,27 +1,53 @@
-# user_register/models.py
-from django.core.validators import RegexValidator
 from django.db import models
-
+from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
 
 class Customer(models.Model):
-    first_name = models.CharField(max_length=120)
-    second_name = models.CharField(max_length=120)
+    DELIVERY_CHOICES = [
+        ('home', 'Home Delivery'),
+        ('pickup', 'Store Pickup'),
+    ]
+
+    # Basic identity
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100, default='NA')
+
+    # Contact
+    email = models.EmailField(unique=True)
 
     phone_regex = RegexValidator(
-        regex=r"^((\+92)|(0092))?-?0?3\d{2}-?\d{7}$",
-        message="Phone number must be valid Pakistani format",
+        regex=r'^03\d{9}$',
+        message='Enter valid Pakistani number (03XXXXXXXXX)'
     )
     phone_number = models.CharField(
-        max_length=15,
+        max_length=11,
         unique=True,
         validators=[phone_regex]
     )
 
-    email = models.EmailField(blank=True, null=True)
-    address = models.TextField(blank=True, null=True)
+    # Delivery info
+    delivery_type = models.CharField(
+        max_length=10,
+        choices=DELIVERY_CHOICES
+    )
+    address = models.TextField(blank=True)
 
+    # Meta info (VERY IMPORTANT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def clean(self):
+        if self.delivery_type == 'home' and not self.address:
+            raise ValidationError("Address is required for home delivery")
+
     def __str__(self):
-        return f"{self.name} - {self.phone_number}"
+        return f"{self.first_name} {self.last_name} - {self.phone_number}"
+    
+
+
+    delivery_type = models.CharField(
+        max_length=10,
+        choices=DELIVERY_CHOICES,
+        default='home'  # <--- add this
+)
+
