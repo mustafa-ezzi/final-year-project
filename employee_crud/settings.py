@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'products',
     "cart"
 ]
-AUTH_USER_MODEL = 'user_register.Customer'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
