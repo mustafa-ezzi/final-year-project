@@ -4,6 +4,7 @@ from .models import Cart, CartItem, Order, OrderItem
 from products.models import Product
 from user_register.models import Customer
 import json
+from django.contrib.auth.decorators import login_required
 
 
 # ---------------- CART DETAIL ----------------
@@ -32,19 +33,26 @@ def cart_detail(request):
 
 # ---------------- ADD TO CART ----------------
 def add_to_cart(request, product_id):
-    cart = request.session.get("cart", {})
+    product = get_object_or_404(Product, id=product_id)
 
-    product_id = str(product_id)
+    cart_id = request.session.get('cart_id')
 
-    if product_id in cart:
-        cart[product_id] += 1
+    if cart_id:
+        cart = Cart.objects.get(id=cart_id)
     else:
-        cart[product_id] = 1
+        cart = Cart.objects.create()
+        request.session['cart_id'] = cart.id
 
-    request.session["cart"] = cart
-    request.session.modified = True
+    item, created = CartItem.objects.get_or_create(
+        cart=cart,
+        product=product
+    )
 
-    return redirect("cart_detail")
+    if not created:
+        item.quantity += 1
+        item.save()
+
+    return redirect('cart_detail')
 
 
 # ---------------- REMOVE ITEM ----------------
