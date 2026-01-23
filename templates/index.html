@@ -46,69 +46,107 @@
 
 <body class="bg-white text-gray-900 antialiased">
 
-  <nav id="mainNav" class="fixed top-0 w-full bg-transparent z-50 transition-all duration-500 py-6 border-b border-transparent">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-12">
-        
-        <a href="#home" class="flex items-center group">
-          <span class="font-display text-2xl font-black tracking-tighter group-hover:text-gray-600 transition">THREADSTORY.</span>
-        </a>
+ <nav
+  id="mainNav"
+  class="fixed top-0 w-full z-50 py-6
+         bg-white/30 backdrop-blur-xl backdrop-saturate-150
+         border-b border-white/20
+         transition-all duration-500"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-12">
 
-        <div class="hidden md:flex items-center space-x-10">
-          <a href="#home" class="text-[11px] font-bold tracking-[0.25em] hover:text-gray-500 transition">HOME</a>
-          <a href="#collections" class="text-[11px] font-bold tracking-[0.25em] hover:text-gray-500 transition">COLLECTIONS</a>
+      <!-- Logo -->
+      <a href="#home" class="flex items-center group">
+        <span class="font-display text-2xl font-black tracking-tighter group-hover:text-gray-600 transition">
+          THREADSTORY.
+        </span>
+      </a>
 
-          <div class="relative group">
-  <button
-    class="text-[11px] font-bold tracking-[0.25em] flex items-center gap-1 cursor-pointer"
-  >
-    CATEGORIES
-    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-    </svg>
-  </button>
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center space-x-10">
+        <a href="#home" class="text-[11px] font-bold tracking-[0.25em] hover:text-gray-500 transition">HOME</a>
+        <a href="#collections" class="text-[11px] font-bold tracking-[0.25em] hover:text-gray-500 transition">COLLECTIONS</a>
 
-  <!-- Hover bridge -->
-  <div class="absolute top-full left-0 w-52 h-4"></div>
+        <!-- Categories Dropdown -->
+        <div class="relative group">
+          <button
+            class="text-[11px] font-bold tracking-[0.25em] flex items-center gap-1 cursor-pointer"
+          >
+            CATEGORIES
+            <svg class="w-3 h-3 transition group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
 
-  <!-- Dropdown -->
-  <div
-    class="absolute top-full left-0 mt-4 w-52 bg-white border border-gray-100 shadow-2xl rounded-sm
-           opacity-0 invisible group-hover:opacity-100 group-hover:visible transition"
-  >
-    <a href="#mens-wear" class="block px-6 py-4 text-xs hover:bg-gray-50">MEN'S WEAR</a>
-    <a href="#womens-wear" class="block px-6 py-4 text-xs hover:bg-gray-50">WOMEN'S WEAR</a>
-    <a href="#kids-wear" class="block px-6 py-4 text-xs hover:bg-gray-50">KIDS' WEAR</a>
-  </div>
-</div>
+          <!-- Hover bridge (does not block clicks) -->
+          <div class="absolute top-full left-0 w-52 h-3 pointer-events-none"></div>
 
-
-          <a href="#contact" class="text-[11px] font-bold tracking-[0.25em] hover:text-gray-500 transition">CONTACT</a>
+          <!-- Dropdown -->
+          <div
+            class="absolute top-full left-0 mt-3 w-52
+                   bg-white/80 backdrop-blur-lg
+                   border border-white/40 shadow-2xl rounded-sm
+                   opacity-0 invisible
+                   group-hover:opacity-100 group-hover:visible
+                   transition-all duration-200"
+          >
+            <a href="#mens-wear" class="block px-6 py-4 text-xs font-medium hover:bg-black/5">MEN'S WEAR</a>
+            <a href="#womens-wear" class="block px-6 py-4 text-xs font-medium hover:bg-black/5">WOMEN'S WEAR</a>
+            <a href="#kids-wear" class="block px-6 py-4 text-xs font-medium hover:bg-black/5">KIDS' WEAR</a>
+          </div>
         </div>
 
-        <div class="hidden md:flex items-center gap-6">
-          <a href="{% url 'login' %}" class="text-[11px] font-bold tracking-[0.25em] bg-black text-white px-6 py-2.5 rounded-full hover:bg-gray-800 transition shadow-lg">
-            ACCOUNT
-          </a>
-        </div> 
-
-        <button id="mobileMenuBtn" class="md:hidden text-black">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
-        </button>
+        <a href="#contact" class="text-[11px] font-bold tracking-[0.25em] hover:text-gray-500 transition">CONTACT</a>
       </div>
 
-      <div id="mobileMenu" class="hidden md:hidden bg-white fixed inset-0 z-40 p-8 flex flex-col justify-center space-y-8 text-center transition-all">
-        <button id="closeMenu" class="absolute top-8 right-8 text-3xl">&times;</button>
-        <a href="#home" class="text-2xl font-display font-bold">Home</a>
-        <a href="#collections" class="text-2xl font-display font-bold">Collections</a>
-        <a href="#mens-wear" class="text-xl">Men's Wear</a>
-        <a href="#womens-wear" class="text-xl">Women's Wear</a>
-        <a href="#kids-wear" class="text-xl">Kids Wear</a>
-        <a href="#contact" class="text-2xl font-display font-bold">Contact</a>
-        <a href="{% url 'login' %}" class="bg-black text-white py-4 rounded-full font-bold">Account</a>
+      <!-- Account -->
+      <div class="hidden md:flex items-center gap-6">
+        <a
+          href="{% url 'login' %}"
+          class="text-[11px] font-bold tracking-[0.25em]
+                 bg-black text-white px-6 py-2.5 rounded-full
+                 hover:bg-gray-800 transition shadow-lg"
+        >
+          ACCOUNT
+        </a>
       </div>
+
+      <!-- Mobile Button -->
+      <button id="mobileMenuBtn" class="md:hidden text-black">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
     </div>
-  </nav>
+
+    <!-- Mobile Menu -->
+    <div
+      id="mobileMenu"
+      class="hidden md:hidden fixed inset-0 z-40
+             bg-white/90 backdrop-blur-xl
+             p-8 flex flex-col justify-center
+             space-y-8 text-center transition-all"
+    >
+      <button id="closeMenu" class="absolute top-8 right-8 text-3xl">&times;</button>
+
+      <a href="#home" class="text-2xl font-display font-bold">Home</a>
+      <a href="#collections" class="text-2xl font-display font-bold">Collections</a>
+      <a href="#mens-wear" class="text-xl">Men's Wear</a>
+      <a href="#womens-wear" class="text-xl">Women's Wear</a>
+      <a href="#kids-wear" class="text-xl">Kids Wear</a>
+      <a href="#contact" class="text-2xl font-display font-bold">Contact</a>
+
+      <a
+        href="{% url 'login' %}"
+        class="bg-black text-white py-4 rounded-full font-bold"
+      >
+        Account
+      </a>
+    </div>
+  </div>
+</nav>
 
   <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-black">
     <div class="absolute inset-0 hero-zoom opacity-60">

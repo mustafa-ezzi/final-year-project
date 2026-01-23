@@ -86,23 +86,25 @@ def update_cart_item(request, item_id):
 
 # ---------------- CHECKOUT ----------------
 def checkout(request):
-    # 1. Require login
-    customer_id = request.session.get("customer_id")
-    if not customer_id:
-        return redirect("login")
-
-    customer = get_object_or_404(Customer, id=customer_id)
-
-    # 2. Get session cart
+    # 1. Get session cart
     session_cart = request.session.get("cart", {})
     if not session_cart:
         return redirect("cart_detail")
 
-    # 3. Create / get DB cart
-    cart, created = Cart.objects.get_or_create(user=customer)
+    # 2. Get / create guest customer
+    customer_id = request.session.get("customer_id")
 
-    # 4. Sync session cart → DB cart
-    cart.items.all().delete()  # prevent duplicates
+    if customer_id:
+        customer = Customer.objects.get(id=customer_id)
+    else:
+        customer = Customer.objects.create(
+            name="Guest User"
+        )
+        request.session["customer_id"] = customer.id
+
+    # 3. Get / create cart
+    cart, created = Cart.objects.get_or_create(user=customer)
+    cart.items.all().delete()
 
     total = 0
     for product_id, qty in session_cart.items():
@@ -114,7 +116,7 @@ def checkout(request):
         )
         total += product.price * qty
 
-    # 5. POST → place order
+    # 4. Place order
     if request.method == "POST":
         data = json.loads(request.body)
 
@@ -135,16 +137,14 @@ def checkout(request):
                 quantity=item.quantity,
             )
 
-        # Clear both carts
         cart.items.all().delete()
-        del request.session["cart"]
+        request.session.pop("cart", None)
 
         return JsonResponse({
             "success": True,
             "order_id": order.id
         })
 
-    # 6. GET → show checkout page
     return render(request, "checkout.html", {
         "cart": cart,
         "customer": customer
