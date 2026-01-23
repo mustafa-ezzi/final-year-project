@@ -9,25 +9,14 @@ from django.contrib.auth.decorators import login_required
 
 # ---------------- CART DETAIL ----------------
 def cart_detail(request):
-    session_cart = request.session.get("cart", {})
-    items = []
-    total = 0
+    cart = None
+    cart_id = request.session.get('cart_id')
 
-    for product_id, qty in session_cart.items():
-        product = Product.objects.get(id=product_id)
-        subtotal = product.price * qty
-        total += subtotal
+    if cart_id:
+        cart = Cart.objects.filter(id=cart_id).first()
 
-        items.append({
-            "product": product,
-            "quantity": qty,
-            "subtotal": subtotal,
-            "product_id": product.id,
-        })
-
-    return render(request, "cart_detail.html", {
-        "items": items,
-        "total": total,
+    return render(request, 'cart_detail.html', {
+        'cart': cart
     })
 
 
@@ -56,14 +45,14 @@ def add_to_cart(request, product_id):
 
 
 # ---------------- REMOVE ITEM ----------------
-def remove_from_cart(request, product_id):
-    cart = request.session.get("cart", {})
-    product_id = str(product_id)
 
-    if product_id in cart:
-        del cart[product_id]
+def remove_from_cart(request, item_id):
+    cart_id = request.session.get("cart_id")
 
-    request.session["cart"] = cart
+    if cart_id:
+        item = get_object_or_404(CartItem, id=item_id, cart_id=cart_id)
+        item.delete()
+
     return redirect("cart_detail")
 
 

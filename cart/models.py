@@ -5,13 +5,14 @@ from products.models import Product
 
 
 class Cart(models.Model):
-   user = models.OneToOneField(Customer,on_delete=models.CASCADE,related_name="cart",null=True,blank=True)
-   
-def __str__(self):
-    return self.user.name if self.user else "Guest Cart"
+    created_at = models.DateTimeField(auto_now_add=True,blank=True, null=True)
 
-def total_price(self):
-    return sum(item.subtotal() for item in self.items.all())
+    def total_price(self):
+        return sum(item.subtotal() for item in self.items.all())
+
+    def __str__(self):
+        return f"Cart {self.id}"
+
 
 
 class CartItem(models.Model):
