@@ -84,6 +84,8 @@ def deleteData(request, id):
     return redirect("index")
 
 
+
+
 def viewProduct(request, id):
     product = get_object_or_404(Product, id=id)
 

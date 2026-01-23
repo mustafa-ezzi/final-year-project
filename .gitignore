@@ -26,7 +26,13 @@ build/
 db.sqlite3
 *.log
 local_settings.py
-media/
+media/*
+!media/**/*.jpg
+!media/**/*.jpeg
+!media/**/*.png
+!media/**/*.webp
+!media/**/*.gif
+
 staticfiles/
 
 # -------------------------

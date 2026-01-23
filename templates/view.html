@@ -3,120 +3,151 @@
 <head>
   {% load static %}
   <meta charset="UTF-8">
-  <title>{{ product.name }} | ThreadStory</title>
+  <title>{{ product.name }} | ThreadStory Premium</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-display { font-family: 'Playfair Display', serif; }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Animated Border Glow */
+    @keyframes rotateGlow {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+    .glow-effect {
+      position: relative;
+    }
+    .glow-effect::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(45deg, #fbbf24, #3b82f6, #fbbf24);
+      z-index: -1;
+      border-radius: 1.5rem;
+      filter: blur(10px);
+      opacity: 0.2;
+      transition: opacity 0.5s;
+    }
+    .glow-effect:hover::before { opacity: 0.5; }
+
+    /* Size Selector Active State */
+    .size-btn.active {
+      background: white;
+      color: black;
+      border-color: white;
+    }
+  </style>
 </head>
 
-<body class="bg-gradient-to-br from-[#0f0f0f] via-[#141414] to-black text-gray-200">
+<body class="bg-[#0a0a0a] text-gray-200 min-h-screen">
 
-<!-- Main Container -->
-<div class="max-w-7xl mx-auto px-6 py-16">
-
-  <!-- Breadcrumb -->
-  <p class="text-sm text-gray-500 mb-10 tracking-wide">
-    Home / {{ product.category }} /
-    <span class="text-white font-semibold">{{ product.name }}</span>
-  </p>
-
-  <!-- Product Card -->
-  <div class="bg-white/5 backdrop-blur-xl rounded-3xl shadow-[0_40px_120px_rgba(0,0,0,0.7)] p-10">
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
-
-      <!-- Image Section -->
-      <div class="relative group">
-        <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 to-gray-600 rounded-3xl blur opacity-30 group-hover:opacity-60 transition"></div>
-        
-        <img src="{{ product.image.url }}"
-             class="relative w-full rounded-3xl shadow-2xl transform group-hover:scale-105 transition duration-500 object-cover"
-             alt="{{ product.name }}">
-      </div>
-
-      <!-- Details Section -->
-      <div class="flex flex-col justify-center">
-
-        <!-- Badge -->
-        {% if product.badge %}
-        <span class="inline-block w-fit text-xs tracking-widest bg-amber-500 text-black px-4 py-1 rounded-full uppercase font-semibold">
-          {{ product.badge }}
-        </span>
-        {% endif %}
-
-        <!-- Title -->
-        <h1 class="text-4xl lg:text-5xl font-extrabold mt-6 tracking-tight text-white">
-          {{ product.name }}
-        </h1>
-
-        <!-- Category -->
-        <p class="mt-2 text-sm uppercase tracking-widest text-gray-400">
-          {{ product.category }} Collection
-        </p>
-
-        <!-- Price -->
-        <p class="text-3xl font-bold text-emerald-400 mt-8">
-          Rs. {{ product.price }}
-        </p>
-
-        <!-- Description -->
-        <p class="text-gray-400 mt-6 leading-relaxed text-lg">
-          {{ product.description }}
-        </p>
-
-        <!-- Features (static luxury perks) -->
-        <ul class="mt-8 space-y-3 text-gray-400">
-          <li>✔ Premium fabric & finishing</li>
-          <li>✔ Tailored luxury fit</li>
-          <li>✔ All-season comfort</li>
-          <li>✔ ThreadStory quality assurance</li>
-        </ul>
-
-        <!-- Size (UI only – optional backend later) -->
-        <div class="mt-10">
-          <h3 class="font-semibold mb-4 text-white">Select Size</h3>
-          <div class="flex gap-4">
-            <button class="px-5 py-2 rounded-xl border border-gray-600 hover:bg-white hover:text-black transition">S</button>
-            <button class="px-5 py-2 rounded-xl border border-gray-600 hover:bg-white hover:text-black transition">M</button>
-            <button class="px-5 py-2 rounded-xl border border-gray-600 hover:bg-white hover:text-black transition">L</button>
-            <button class="px-5 py-2 rounded-xl border border-gray-600 hover:bg-white hover:text-black transition">XL</button>
-          </div>
-        </div>
-<!-- Buttons -->
-<div class="flex gap-6 mt-12">
-  <a href="{% url 'add_to_cart' product.id %}">
-    <button
-      class="flex-1 bg-white text-black py-4 px-5 rounded-2xl
-             font-medium border border-gray-200
-             shadow-md hover:shadow-lg
-             transition-all duration-300">
-      Add to Cart
-    </button>
+<nav class="max-w-7xl mx-auto px-6 py-8">
+  <a href="/" class="text-[10px] font-bold tracking-[0.3em] text-gray-500 hover:text-white transition uppercase flex items-center gap-2">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+    Back to Collection
   </a>
+</nav>
 
-  <button
-    class="flex-1 border-2 border-white py-4 rounded-2xl
-           font-semibold text-white
-           hover:bg-white hover:text-black
-           shadow-md hover:shadow-lg
-           transition-all duration-300">
-    Buy Now
-  </button>
-</div>
-
-
-        <!-- Trust Badges -->
-        <div class="flex gap-8 mt-10 text-sm text-gray-500">
-          <span>🚚 Free Shipping</span>
-          <span>🔄 Easy Returns</span>
-          <span>🔒 Secure Checkout</span>
+<main class="max-w-7xl mx-auto px-6 pb-24">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+    
+    <div class="lg:col-span-7">
+      <div class="glow-effect group sticky top-12">
+        <img src="{{ product.image.url }}"
+             class="w-full rounded-2xl shadow-2xl object-cover aspect-[4/5]"
+             alt="{{ product.name }}">
+        
+        <div class="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
+          <button class="bg-black/50 backdrop-blur-md p-3 rounded-full border border-white/10">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
+          </button>
         </div>
-
       </div>
     </div>
+
+    <div class="lg:col-span-5 flex flex-col">
+      
+      <div class="mb-8">
+        {% if product.badge %}
+        <span class="text-[10px] tracking-[0.4em] text-amber-500 font-bold uppercase mb-4 block">{{ product.badge }}</span>
+        {% endif %}
+        <h1 class="font-display text-5xl md:text-6xl font-bold text-white leading-tight mb-4">
+          {{ product.name }}
+        </h1>
+        <div class="flex items-center gap-4">
+          <p class="text-3xl font-light text-white italic">Rs. {{ product.price }}</p>
+          <span class="px-3 py-1 bg-emerald-500/10 text-emerald-500 text-[10px] font-bold rounded-full tracking-wider">IN STOCK</span>
+        </div>
+      </div>
+
+      <div class="h-[1px] w-full bg-white/10 mb-8"></div>
+
+      <div class="mb-10">
+        <h3 class="text-xs font-bold tracking-widest text-gray-500 uppercase mb-4">Description</h3>
+        <p class="text-gray-400 leading-relaxed font-light text-lg">
+          {{ product.description }}
+        </p>
+      </div>
+
+      <div class="mb-10">
+        <div class="flex justify-between mb-4">
+          <h3 class="text-xs font-bold tracking-widest text-gray-500 uppercase">Select Size</h3>
+          <button class="text-[10px] text-white underline tracking-widest uppercase opacity-60 hover:opacity-100">Size Guide</button>
+        </div>
+        
+      </div>
+
+      <div class="flex flex-col gap-4 mb-12">
+        <a href="{% url 'add_to_cart' product.id %}" class="w-full">
+          <button class="w-full bg-white text-black py-5 rounded-full font-bold tracking-widest text-xs hover:bg-gray-200 transition-all transform active:scale-[0.98]">
+            ADD TO SHOPPING BAG
+          </button>
+        </a>
+        <button class="w-full border border-white/20 text-white py-5 rounded-full font-bold tracking-widest text-xs hover:bg-white hover:text-black transition-all">
+          BUY IT NOW
+        </button>
+      </div>
+
+      <div class="glass-card rounded-2xl p-8 grid grid-cols-2 gap-y-6">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+          <span class="text-xs font-medium tracking-wide">Free Shipping</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+          <span class="text-xs font-medium tracking-wide">2 Year Warranty</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+          <span class="text-xs font-medium tracking-wide">Easy Returns</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+          <span class="text-xs font-medium tracking-wide">Secure Checkout</span>
+        </div>
+      </div>
+
+    </div>
   </div>
-</div>
+</main>
+
+<script>
+  function selectSize(btn) {
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+</script>
 
 </body>
 </html>
