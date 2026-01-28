@@ -61,6 +61,20 @@
       }
     }
 
+
+
+    .mobile-link {
+      transition: all 0.3s ease;
+      border-bottom: 1px solid transparent;
+      width: fit-content;
+    }
+
+    .mobile-link:hover {
+      padding-left: 10px;
+      color: #9ca3af;
+      /* gray-400 */
+    }
+
     .dropdown:hover .dropdown-menu {
       display: block;
       animation: fadeIn 0.2s ease-out;
@@ -77,98 +91,173 @@
         transform: translateY(0);
       }
     }
+
+    /* Update these in your <style> section */
+
+    #mainNav {
+      /* Initial state: semi-transparent dark tint so white text pops */
+      background-color: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .nav-active {
+      /* Scrolled state: semi-transparent white with heavy blur */
+      background-color: rgba(255, 255, 255, 0.75) !important;
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+      padding-top: 0.75rem !important;
+      padding-bottom: 0.75rem !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Ensure text is white initially, then turns black on scroll */
+    #mainNav.nav-active .nav-text {
+      color: #000000;
+    }
+
+    #mainNav .nav-text {
+      color: #ffffff;
+      transition: color 0.5s ease;
+    }
+
+    /* Specific fix for the Logo and SVG icons */
+    #mainNav.nav-active svg,
+    #mainNav.nav-active span {
+      color: #000000;
+      stroke: #000000;
+    }
+
+    #mainNav svg,
+    #mainNav span {
+      color: #ffffff;
+      stroke: #ffffff;
+      transition: all 0.5s ease;
+    }
   </style>
 </head>
 
 <body class="bg-white text-gray-900 antialiased">
 
-  <nav id="mainNav" class="fixed top-0 w-full z-50 py-6
-         bg-white/30 backdrop-blur-xl backdrop-saturate-150
-         border-b border-white/20
-         transition-all duration-500">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-12">
+  <nav id="mainNav" class="fixed top-0 w-full z-50 py-6 transition-all duration-700 ease-in-out">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="flex justify-between items-center h-14">
 
-        <!-- Logo -->
-        <a href="#home" class="flex items-center group">
-          <span class="font-display text-2xl font-black tracking-tighter group-hover:text-gray-600 transition">
+        <a href="/" class="flex items-center group relative overflow-hidden">
+          <span
+            class="font-display text-2xl font-black tracking-tighter transition-transform duration-500 group-hover:-translate-y-full block nav-text">
             THREADSTORY.
+          </span>
+          <span
+            class="font-display text-2xl font-black tracking-tighter absolute top-0 left-0 transition-transform duration-500 translate-y-full group-hover:translate-y-0 block italic text-gray-500">
+            Shop
           </span>
         </a>
 
-        <!-- Desktop Menu -->
-        <div class="hidden md:flex items-center space-x-10">
-          <a href="#home" class="text-[11px] font-bold tracking-[0.25em] hover:text-gray-500 transition">HOME</a>
-          <a href="#collections"
-            class="text-[11px] font-bold tracking-[0.25em] hover:text-gray-500 transition">COLLECTIONS</a>
+        <div class="hidden md:flex items-center space-x-12">
+          <a href="/"
+            class="nav-text text-[10px] font-bold tracking-[0.3em] hover:text-gray-400 transition-colors">HOME</a>
+          <a href="/#collections"
+            class="nav-text text-[10px] font-bold tracking-[0.3em] hover:text-gray-400 transition-colors">COLLECTIONS</a>
 
-          <!-- Categories Dropdown -->
-          <div class="relative group">
-            <button class="text-[11px] font-bold tracking-[0.25em] flex items-center gap-1 cursor-pointer">
-              CATEGORIES
-              <svg class="w-3 h-3 transition group-hover:rotate-180" fill="none" stroke="currentColor"
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
+          {% if request.session.customer_name %}
+          <div class="relative group h-full flex items-center">
+            <a href="{% url 'my_orders' %}"
+              class="nav-text text-[10px] font-bold tracking-[0.3em] hover:text-gray-400 transition-colors flex items-center gap-2">
+              MY ORDERS
+              <span class="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"></span>
+            </a>
 
-            <!-- Hover bridge (does not block clicks) -->
-            <div class="absolute top-full left-0 w-52 h-3 pointer-events-none"></div>
+            <div class="h-4 w-[1px] bg-gray-200/30 mx-6"></div>
 
-            <!-- Dropdown -->
-            <div class="absolute top-full left-0 mt-3 w-52
-                   bg-white/80 backdrop-blur-lg
-                   border border-white/40 shadow-2xl rounded-sm
-                   opacity-0 invisible
-                   group-hover:opacity-100 group-hover:visible
-                   transition-all duration-200">
-              <a href="#mens-wear" class="block px-6 py-4 text-xs font-medium hover:bg-black/5">MEN'S WEAR</a>
-              <a href="#womens-wear" class="block px-6 py-4 text-xs font-medium hover:bg-black/5">WOMEN'S WEAR</a>
-              <a href="#kids-wear" class="block px-6 py-4 text-xs font-medium hover:bg-black/5">KIDS' WEAR</a>
+            <div class="flex flex-col items-start cursor-default">
+              <span
+                class="text-[8px] font-bold tracking-[0.2em] text-gray-400 uppercase italic leading-none mb-1">Welcome
+                back</span>
+              <span class="nav-text text-[11px] font-black tracking-[0.2em] uppercase">
+                {{ request.session.customer_name }}
+              </span>
             </div>
           </div>
-
-          <a href="#contact" class="text-[11px] font-bold tracking-[0.25em] hover:text-gray-500 transition">CONTACT</a>
+          {% else %}
+          <a href="/#contact"
+            class="nav-text text-[10px] font-bold tracking-[0.3em] hover:text-gray-400 transition-colors">CONTACT</a>
+          <a href="/login/"
+            class="nav-text text-[10px] font-bold tracking-[0.3em] hover:text-gray-400 transition-colors">SIGN IN</a>
+          {% endif %}
         </div>
 
-        <!-- Account -->
-        <div class="hidden md:flex items-center gap-6">
-          <a href="{% url 'login' %}" class="text-[11px] font-bold tracking-[0.25em]
-                 bg-black text-white px-6 py-2.5 rounded-full
-                 hover:bg-gray-800 transition shadow-lg">
-            ACCOUNT
+        <div class="flex items-center space-x-8">
+          <a href="/cart/" class="flex items-center space-x-3 group relative">
+            <div class="relative">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-colors nav-text" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              <span id="cart-count"
+                class="absolute -top-1.5 -right-2 bg-black text-white text-[7px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-bold border border-white">0</span>
+            </div>
+            <span id="cart-total" class="hidden lg:block nav-text text-[10px] font-black tracking-widest uppercase">0.00
+              PKR</span>
           </a>
+
+          <button id="mobileMenuBtn" class="md:hidden focus:outline-none">
+            <div class="w-6 h-4 flex flex-col justify-between items-end">
+              <span class="w-6 h-[1.5px] bg-current nav-text"></span>
+              <span class="w-4 h-[1.5px] bg-current nav-text"></span>
+            </div>
+          </button>
         </div>
 
-        <!-- Mobile Button -->
-        <button id="mobileMenuBtn" class="md:hidden text-black">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Mobile Menu -->
-      <div id="mobileMenu" class="hidden md:hidden fixed inset-0 z-40
-             bg-white/90 backdrop-blur-xl
-             p-8 flex flex-col justify-center
-             space-y-8 text-center transition-all">
-        <button id="closeMenu" class="absolute top-8 right-8 text-3xl">&times;</button>
-
-        <a href="#home" class="text-2xl font-display font-bold">Home</a>
-        <a href="#collections" class="text-2xl font-display font-bold">Collections</a>
-        <a href="#mens-wear" class="text-xl">Men's Wear</a>
-        <a href="#womens-wear" class="text-xl">Women's Wear</a>
-        <a href="#kids-wear" class="text-xl">Kids Wear</a>
-        <a href="#contact" class="text-2xl font-display font-bold">Contact</a>
-
-        <a href="{% url 'login' %}" class="bg-black text-white py-4 rounded-full font-bold">
-          Account
-        </a>
       </div>
     </div>
   </nav>
 
+  <div id="mobileDrawer"
+    class="fixed inset-0 z-[60] bg-white translate-x-full transition-transform duration-500 ease-in-out md:hidden">
+    <div class="flex flex-col h-full p-10">
+      <div class="flex justify-end">
+        <button id="closeMobileBtn" class="text-xs font-bold tracking-widest uppercase py-4">Close ✕</button>
+      </div>
+      <div class="flex flex-col space-y-8 mt-20">
+        <a href="#home" class="mobile-link font-display text-4xl italic">Home</a>
+        <a href="#collections" class="mobile-link font-display text-4xl italic">Collections</a>
+        <a href="#contact" class="mobile-link font-display text-4xl italic">Contact</a>
+        {% if request.session.customer_name %}
+        <div class="relative group h-full flex items-center">
+          <a href="{% url 'my_orders' %}"
+            class="nav-text text-[10px] font-bold tracking-[0.3em] hover:text-gray-400 transition-colors flex items-center gap-2">
+            MY ORDERS
+            <span class="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"></span>
+          </a>
+
+          <div class="h-4 w-[1px] bg-gray-200/30 mx-6"></div>
+
+          <div class="flex flex-col items-start cursor-default">
+            <span class="text-[8px] font-bold tracking-[0.2em] text-gray-400 uppercase italic leading-none mb-1">Welcome
+              back</span>
+            <span class="nav-text text-[11px] font-black tracking-[0.2em] uppercase">
+              {{ request.session.customer_name }}
+            </span>
+          </div>
+        </div>
+        {% else %}
+        <a href="/#contact"
+          class="nav-text text-[10px] font-bold tracking-[0.3em] hover:text-gray-400 transition-colors">CONTACT</a>
+        <a href="/login/"
+          class="nav-text text-[10px] font-bold tracking-[0.3em] hover:text-gray-400 transition-colors">SIGN IN</a>
+        {% endif %}
+
+        {% if request.session.customer_name %}
+        <div class="pt-10 border-t border-gray-100">
+          <p class="text-[10px] font-bold tracking-widest text-gray-400 uppercase">Profile</p>
+          <p class="text-2xl font-black mt-2">{{ request.session.customer_name }}</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
   <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-black">
     <div class="absolute inset-0 hero-zoom opacity-60">
       <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920" alt="Hero"
@@ -247,8 +336,7 @@
             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors"></div>
             {% if product.badge %}
             <span
-              class="absolute top-4 left-4 bg-black text-white text-[9px] font-bold px-3 py-1 uppercase tracking-tighter">{{
-              product.badge }}</span>
+              class="absolute top-4 left-4 bg-black text-white text-[9px] font-bold px-3 py-1 uppercase tracking-tighter">{{product.badge}}</span>
             {% endif %}
 
             <div
@@ -265,7 +353,7 @@
           </div>
           <div class="text-center">
             <h3 class="text-xs font-bold tracking-widest uppercase mb-2">{{ product.name }}</h3>
-            <p class="font-display text-xl font-medium">${{ product.price }}</p>
+            <p class="font-display text-xl font-medium">{{ product.price }} PKR </p>
             <a href="{% url 'view-product' product.id %}"
               class="mt-2 text-[10px] text-gray-400 font-bold tracking-widest border-b border-transparent hover:border-gray-400 transition inline-block">VIEW
               DETAILS</a>
@@ -288,87 +376,83 @@
       <div class="grid md:grid-cols-3 gap-16 border-t border-gray-800 pt-16">
         <div>
           <h4 class="text-[10px] font-bold tracking-[0.4em] text-gray-500 mb-6 uppercase">Visit</h4>
-          <p class="text-lg font-light">123 Fashion Ave, New York<br>NY 10001</p>
+          <p class="text-lg font-light">Saifee Eid E Zahabi <br>First Floor IT Lab</p>
         </div>
         <div>
           <h4 class="text-[10px] font-bold tracking-[0.4em] text-gray-500 mb-6 uppercase">Inquire</h4>
           <a href="mailto:concierge@threadstory.com"
-            class="text-lg font-light hover:text-gray-400 transition">concierge@threadstory.com</a>
+            class="text-lg font-light hover:text-gray-400 transition">contact@threadstory.com</a>
         </div>
         <div>
           <h4 class="text-[10px] font-bold tracking-[0.4em] text-gray-500 mb-6 uppercase">Call</h4>
-          <p class="text-lg font-light">+1 (234) 567 890</p>
+          <p class="text-lg font-light">+92 336 33994 45</p>
         </div>
       </div>
     </div>
   </section>
 
-  <footer class="bg-white text-black py-20 border-t border-gray-100">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row justify-between items-start gap-12">
-        <div class="max-w-xs">
-          <h3 class="font-display text-3xl font-black mb-6">THREADSTORY.</h3>
-          <p class="text-gray-500 text-sm leading-relaxed tracking-wide">Premium fashion with soul — timeless pieces for
-            the modern individual.</p>
+<footer class="bg-white text-black py-12 border-t border-gray-50">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex flex-col items-center md:items-start">
+                <h3 class="font-display text-xl font-black tracking-tighter">THREADSTORY.</h3>
+                <p class="text-[9px] tracking-[0.3em] text-gray-400 font-bold uppercase mt-1">Atelier</p>
+            </div>
+
+            <nav class="flex flex-wrap justify-center gap-x-10 gap-y-4">
+                <a href="#collections" class="text-[10px] font-bold tracking-[0.2em] text-gray-400 hover:text-black transition">COLLECTIONS</a>
+                <a href="#" class="text-[10px] font-bold tracking-[0.2em] text-gray-400 hover:text-black transition">SHIPPING</a>
+                <a href="#" class="text-[10px] font-bold tracking-[0.2em] text-gray-400 hover:text-black transition">RETURNS</a>
+                <a href="{% url 'my_orders' %}" class="text-[10px] font-bold tracking-[0.2em] text-gray-400 hover:text-black transition">MY ORDERS</a>
+            </nav>
+
+            <div class="flex gap-6">
+                <a href="#" class="text-gray-400 hover:text-black transition"><i class="fa-brands fa-instagram text-sm"></i></a>
+                <a href="#" class="text-gray-400 hover:text-black transition"><i class="fa-brands fa-pinterest text-sm"></i></a>
+            </div>
         </div>
 
-        <div class="flex gap-20">
-          <div>
-            <h4 class="text-[11px] font-black tracking-widest mb-6 uppercase">Shop</h4>
-            <ul class="space-y-4 text-xs font-medium text-gray-500">
-              <li><a href="#" class="hover:text-black transition">Collections</a></li>
-              <li><a href="#" class="hover:text-black transition">Sustainability</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-[11px] font-black tracking-widest mb-6 uppercase">Support</h4>
-            <ul class="space-y-4 text-xs font-medium text-gray-500">
-              <li><a href="#" class="hover:text-black transition">Shipping</a></li>
-              <li><a href="#" class="hover:text-black transition">Returns</a></li>
-            </ul>
-          </div>
+        <div class="mt-12 pt-8 border-t border-gray-50 flex flex-col md:flex-row justify-between items-center gap-4 text-[8px] font-bold text-gray-300 tracking-[0.3em] uppercase">
+            <p>© {% now "Y" %} THREADSTORY INC.</p>
+            <p>Privacy & Terms</p>
         </div>
-      </div>
-
-      <div
-        class="mt-20 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-bold text-gray-400 tracking-widest">
-        <p>© {% now "Y" %} THREADSTORY INC. ALL RIGHTS RESERVED.</p>
-        <div class="flex gap-8">
-          <a href="#" class="hover:text-black transition">INSTAGRAM</a>
-          <a href="#" class="hover:text-black transition">PINTEREST</a>
-          <a href="#" class="hover:text-black transition">TIKTOK</a>
-        </div>
-      </div>
     </div>
-  </footer>
+</footer>
 
   <script>
-    // Navbar Scroll Logic
-    const nav = document.getElementById('mainNav');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 100) {
-        nav.classList.add('nav-scrolled');
-        nav.classList.remove('py-6');
-      } else {
-        nav.classList.remove('nav-scrolled');
-        nav.classList.add('py-6');
-      }
-    });
-
-    // Mobile menu toggle
-    const menuBtn = document.getElementById('mobileMenuBtn');
-    const closeBtn = document.getElementById('closeMenu');
-    const menu = document.getElementById('mobileMenu');
-
-    menuBtn.addEventListener('click', () => menu.classList.remove('hidden'));
-    closeBtn.addEventListener('click', () => menu.classList.add('hidden'));
-
     document.addEventListener("DOMContentLoaded", () => {
       const csrfToken = "{{ csrf_token }}";
+      const snackbar = document.getElementById('snackbar');
+      const cartCount = document.getElementById('cart-count');
+      const cartTotal = document.getElementById('cart-total');
+      let snackbarTimer; // Variable to manage snackbar timeout
+
+      function showSnackbar(message) {
+        const msgElement = document.getElementById('snackbar-message');
+        if (!snackbar || !msgElement) return;
+
+        msgElement.textContent = message;
+        snackbar.classList.remove('translate-y-20', 'opacity-0');
+
+        // Clear existing timer if user adds items rapidly
+        clearTimeout(snackbarTimer);
+
+        snackbarTimer = setTimeout(() => {
+          snackbar.classList.add('translate-y-20', 'opacity-0');
+        }, 3000);
+      }
 
       document.querySelectorAll(".add-to-cart-btn").forEach(button => {
-        button.addEventListener("click", () => {
-          const productId = button.dataset.productId;
+        button.addEventListener("click", function (e) {
+          e.preventDefault();
+          const productId = this.dataset.productId;
+          const originalText = this.textContent;
+
+          // Prevent double-clicks while processing
+          if (this.classList.contains('pointer-events-none')) return;
+
+          this.textContent = "ADDING...";
+          this.classList.add('pointer-events-none', 'opacity-70');
 
           fetch(`/cart/add/${productId}/`, {
             method: "POST",
@@ -377,21 +461,83 @@
               "Content-Type": "application/json"
             }
           })
-            .then(res => res.json())
+            .then(res => {
+              if (!res.ok) throw new Error('Network response was not ok');
+              return res.json();
+            })
             .then(data => {
               if (data.success) {
-                // Optional UI feedback
-                button.textContent = "ADDED ✓";
-                setTimeout(() => {
-                  button.textContent = "ADD TO CART";
-                }, 1500);
+                // Update Navbar - handle potential missing data gracefully
+                if (data.cart_total !== undefined && cartTotal) {
+                  cartTotal.textContent = `${data.cart_total} PKR`;
+                }
+                if (data.cart_count !== undefined && cartCount) {
+                  cartCount.textContent = data.cart_count;
+                }
+
+                this.textContent = "ADDED ✓";
+                showSnackbar("PRODUCT ADDED TO YOUR COLLECTION");
+              } else {
+                throw new Error(data.message || 'Failed to add');
               }
+            })
+            .catch(err => {
+              console.error("Cart Error:", err);
+              this.textContent = "UNAVAILABLE";
+              showSnackbar("COULD NOT ADD ITEM");
+            })
+            .finally(() => {
+              // Return button to normal after a delay
+              setTimeout(() => {
+                this.textContent = originalText;
+                this.classList.remove('pointer-events-none', 'opacity-70');
+              }, 1500);
             });
+        });
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const nav = document.getElementById('mainNav');
+      const mobileBtn = document.getElementById('mobileMenuBtn');
+      const closeBtn = document.getElementById('closeMobileBtn');
+      const drawer = document.getElementById('mobileDrawer');
+
+      // 1. Scroll Effect
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          nav.classList.add('nav-active');
+        } else {
+          nav.classList.remove('nav-active');
+        }
+      });
+
+      // 2. Mobile Drawer Toggles
+      mobileBtn.addEventListener('click', () => {
+        drawer.classList.remove('translate-x-full');
+      });
+
+      closeBtn.addEventListener('click', () => {
+        drawer.classList.add('translate-x-full');
+      });
+
+      // Close drawer when clicking a link
+      document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+          drawer.classList.add('translate-x-full');
         });
       });
     });
   </script>
 
+  <div id="snackbar"
+    class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] transform translate-y-20 opacity-0 transition-all duration-500 ease-out">
+    <div class="bg-black text-white px-8 py-4 rounded-sm shadow-2xl flex items-center space-x-4 min-w-[300px]">
+      <span class="text-[10px] font-bold tracking-[0.2em] flex-grow" id="snackbar-message">ITEM ADDED TO STORY</span>
+      <div class="w-1 h-4 bg-white/30"></div>
+      <a href="/cart/" class="text-[9px] font-black underline tracking-widest hover:text-gray-300">VIEW CART</a>
+    </div>
+  </div>
 </body>
 
 </html>

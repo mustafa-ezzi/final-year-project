@@ -3,331 +3,329 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout | FashionHub Atelier</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | FashionHub Atelier</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { inter: ['Inter', 'sans-serif'], playfair: ['Playfair Display', 'serif'] },
+          colors: { luxury: '#0f172a', gold: '#c5a059' }
+        }
+      }
+    }
+  </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #fcfcfc;
+      scroll-behavior: smooth;
+    }
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    .lux-input {
+      transition: all 0.3s ease;
+      border: 1px solid #e2e8f0;
+      border-radius: 2px;
+    }
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        inter: ['Inter', 'sans-serif'],
-                        playfair: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        luxury: '#0f172a',
-                        gold: '#c5a059',
-                    }
-                }
-            }
-        }
-    </script>
+    .lux-input:focus {
+      border-color: #c5a059;
+      box-shadow: 0 4px 15px rgba(197, 160, 89, 0.1);
+      outline: none;
+    }
 
-    <style>
-        body { background-color: #fcfcfc; }
-        .lux-input {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid #e2e8f0;
-        }
-        .lux-input:focus {
-            border-color: #c5a059;
-            box-shadow: 0 4px 20px -5px rgba(197, 160, 89, 0.2);
-            transform: translateY(-1px);
-        }
-        .shipping-card, .pay-card {
-            transition: all 0.4s ease;
-            border: 1px solid #f1f5f9;
-        }
-        .shipping-card.active, .pay-card.active {
-            border-color: #c5a059;
-            background: #fffdf9;
-            box-shadow: 0 10px 30px -10px rgba(197, 160, 89, 0.15);
-        }
-        .glass-summary {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-        .step-active { position: relative; }
-        .step-active::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 2px;
-            background: #c5a059;
-        }
-    </style>
+    .shipping-card {
+      transition: all 0.3s ease;
+      border: 1px solid #f1f5f9;
+      position: relative;
+    }
+
+    .shipping-card.active {
+      border-color: #c5a059;
+      background: #fffdf9;
+    }
+
+    .glass-summary {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid white;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-up {
+      animation: fadeIn 0.5s ease forwards;
+    }
+  </style>
 </head>
 
 <body class="font-inter text-slate-900 antialiased">
-
-    <nav class="fixed top-0 w-full bg-white/70 backdrop-blur-md border-b border-slate-100 z-50">
-        <div class="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
-            <a href="#" class="font-playfair text-3xl font-black tracking-tighter text-slate-900 italic">
-                FashionHub
-            </a>
-            <a href="{% url 'index' %}" class="group text-xs tracking-[0.2em] font-bold text-slate-400 hover:text-gold transition-all">
-                <i class="fas fa-chevron-left mr-2 group-hover:-translate-x-1 transition-transform"></i> BACK TO CATALOGUE
-            </a>
-        </div>
-    </nav>
-
-    <div class="pt-32 pb-24 max-w-7xl mx-auto px-8">
-
-        <div class="flex justify-center items-center gap-12 mb-20">
-            <div class="text-center step-active">
-                <span class="text-[10px] tracking-[0.3em] font-bold text-gold block mb-2">01</span>
-                <span class="text-xs font-bold uppercase tracking-widest">Shipping</span>
-            </div>
-            <div class="w-12 h-[1px] bg-slate-200"></div>
-            <div class="text-center opacity-30">
-                <span class="text-[10px] tracking-[0.3em] font-bold block mb-2">02</span>
-                <span class="text-xs font-bold uppercase tracking-widest">Payment</span>
-            </div>
-            <div class="w-12 h-[1px] bg-slate-200"></div>
-            <div class="text-center opacity-30">
-                <span class="text-[10px] tracking-[0.3em] font-bold block mb-2">03</span>
-                <span class="text-xs font-bold uppercase tracking-widest">Review</span>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
-
-            <div class="lg:col-span-7 space-y-16">
-
-                <section>
-                    <div class="flex items-center gap-4 mb-10">
-                        <h2 class="font-playfair text-4xl font-bold">Delivery Details</h2>
-                        <div class="h-[1px] flex-1 bg-slate-100"></div>
-                    </div>
-
-                    <form id="checkout-form" class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">First Name</label>
-                                <input class="lux-input w-full px-5 py-4 bg-white rounded-sm outline-none" name="first_name" placeholder="John" required>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Last Name</label>
-                                <input class="lux-input w-full px-5 py-4 bg-white rounded-sm outline-none" name="last_name" placeholder="Doe" required>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Email</label>
-                                <input class="lux-input w-full px-5 py-4 bg-white rounded-sm outline-none" name="email" value="{{ request.session.customer_email }}" required>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Phone</label>
-                                <input class="lux-input w-full px-5 py-4 bg-white rounded-sm outline-none" name="phone_number" value="{{ request.session.customer_phone }}" required>
-                            </div>
-                        </div>
-
-                        <div class="space-y-2">
-                            <label class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Street Address</label>
-                            <input class="lux-input w-full px-5 py-4 bg-white rounded-sm outline-none" name="address" placeholder="123 Luxury Lane" required>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <input class="lux-input w-full px-5 py-4 bg-white rounded-sm outline-none" name="city" placeholder="City" required>
-                            <input class="lux-input w-full px-5 py-4 bg-white rounded-sm outline-none" name="state" placeholder="State" required>
-                            <input class="lux-input w-full px-5 py-4 bg-white rounded-sm outline-none" name="zip" placeholder="ZIP" required>
-                        </div>
-
-                        <div class="pt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="shipping-card active p-6 cursor-pointer group" data-price="0">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <p class="text-xs font-bold tracking-widest uppercase">Standard Boutique</p>
-                                        <p class="text-[11px] text-slate-400 mt-1">Complimentary (5-7 Days)</p>
-                                    </div>
-                                    <div class="w-4 h-4 rounded-full border-2 border-gold flex items-center justify-center">
-                                        <div class="w-2 h-2 rounded-full bg-gold"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="shipping-card p-6 cursor-pointer group" data-price="15">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <p class="text-xs font-bold tracking-widest uppercase">Priority Atelier</p>
-                                        <p class="text-[11px] text-slate-400 mt-1">Next Day Delivery ($15.00)</p>
-                                    </div>
-                                    <div class="w-4 h-4 rounded-full border-2 border-slate-200"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </section>
-
-                <section class="opacity-50 hover:opacity-100 transition-opacity">
-                    <div class="flex items-center gap-4 mb-10">
-                        <h2 class="font-playfair text-4xl font-bold">Secure Payment</h2>
-                        <div class="h-[1px] flex-1 bg-slate-100"></div>
-                    </div>
-                    
-                    <div class="bg-slate-900 p-10 rounded-sm text-white space-y-8 luxury-shadow">
-                        <div class="flex gap-6 border-b border-slate-800 pb-6">
-                            <button class="text-[10px] tracking-[0.3em] font-bold text-gold border-b border-gold pb-2">CREDIT CARD</button>
-                            <button class="text-[10px] tracking-[0.3em] font-bold text-slate-500">PAYPAL</button>
-                        </div>
-                        
-                        <div class="space-y-6">
-                            <input class="w-full bg-transparent border-b border-slate-700 py-3 outline-none focus:border-gold transition-colors font-mono" placeholder="0000 0000 0000 0000">
-                            <div class="grid grid-cols-2 gap-10">
-                                <input class="bg-transparent border-b border-slate-700 py-3 outline-none focus:border-gold transition-colors" placeholder="MM/YY">
-                                <input class="bg-transparent border-b border-slate-700 py-3 outline-none focus:border-gold transition-colors" placeholder="CVV">
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <div class="lg:col-span-5">
-                <div class="sticky top-32 glass-summary p-10 rounded-sm luxury-shadow">
-                    <h3 class="font-playfair text-2xl font-bold mb-8 italic">Your Selection</h3>
-
-                    <div class="space-y-8 max-h-[400px] overflow-y-auto pr-4 mb-10 custom-scroll">
-                        {% for item in cart.items.all %}
-                        <div class="flex gap-6 items-center">
-                            <div class="relative">
-                                <img src="{{ item.product.image.url }}" class="w-20 h-24 object-cover grayscale hover:grayscale-0 transition-all duration-500">
-                                <span class="absolute -top-2 -right-2 bg-slate-900 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full">{{ item.quantity }}</span>
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-xs font-bold uppercase tracking-widest">{{ item.product.name }}</p>
-                                <p class="text-[10px] text-slate-400 mt-1 uppercase">{{ item.product.category }}</p>
-                                <p class="text-sm font-bold mt-2 text-gold">${{ item.subtotal }}</p>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-
-                    <div class="space-y-4 border-t border-slate-100 pt-8">
-                        <div class="flex justify-between text-[11px] tracking-widest font-medium text-slate-400 uppercase">
-                            <span>Subtotal</span>
-                            <span>${{ cart.total_price }}</span>
-                        </div>
-                        <div class="flex justify-between text-[11px] tracking-widest font-medium text-slate-400 uppercase">
-                            <span>Shipping</span>
-                            <span id="shipping-price">$0.00</span>
-                        </div>
-                        <div class="flex justify-between text-[11px] tracking-widest font-medium text-slate-400 uppercase">
-                            <span>Duties & Tax</span>
-                            <span id="tax-amount">$0.00</span>
-                        </div>
-                        <div class="flex justify-between text-xl font-playfair font-bold pt-4 text-slate-900">
-                            <span>Total Amount</span>
-                            <span id="total-price" class="text-gold">${{ cart.total_price }}</span>
-                        </div>
-                    </div>
-
-                    <button id="place-order" class="w-full mt-10 py-5 bg-slate-900 text-white text-[11px] font-bold tracking-[0.4em] uppercase hover:bg-gold transition-all duration-500 shadow-2xl">
-                        PLACE YOUR ORDER
-                    </button>
-
-                    <div class="mt-6 flex items-center justify-center gap-4 opacity-30">
-                        <i class="fab fa-cc-visa text-2xl"></i>
-                        <i class="fab fa-cc-mastercard text-2xl"></i>
-                        <i class="fab fa-cc-amex text-2xl"></i>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+  <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-slate-100 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="/" class="font-playfair text-2xl font-black italic tracking-tighter">FashionHub</a>
+      <a href="#"
+        class="text-[10px] tracking-[0.2em] font-bold text-slate-400 hover:text-gold transition-all">
+        <i class="fas fa-arrow-left mr-2"></i> RETURN TO SHOP
+      </a>
     </div>
+  </nav>
 
-    <script>
-        const shippingCards = document.querySelectorAll(".shipping-card");
-        let shippingPrice = 0;
-        
-        // Initial Calculation
-        window.onload = () => updateTotal();
+  <main class="pt-28 pb-20 max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
-        shippingCards.forEach(card => {
-            card.addEventListener("click", () => {
-                shippingCards.forEach(c => {
-                    c.classList.remove("active");
-                    c.querySelector('.w-4').innerHTML = '';
-                    c.querySelector('.w-4').className = 'w-4 h-4 rounded-full border-2 border-slate-200';
-                });
-                
-                card.classList.add("active");
-                card.querySelector('.w-4').className = 'w-4 h-4 rounded-full border-2 border-gold flex items-center justify-center';
-                card.querySelector('.w-4').innerHTML = '<div class="w-2 h-2 rounded-full bg-gold"></div>';
-                
-                shippingPrice = parseFloat(card.dataset.price);
-                document.getElementById("shipping-price").innerText = "$" + shippingPrice.toFixed(2);
-                updateTotal();
-            });
+      <div class="lg:col-span-7 space-y-12 animate-up">
+        <section>
+          <div class="flex items-center gap-4 mb-8">
+            <h2 class="font-playfair text-3xl font-bold italic">Account & Shipping</h2>
+            <div class="h-[1px] flex-1 bg-slate-100"></div>
+          </div>
+
+          <form id="unified-checkout-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">First Name</label>
+              <input type="text" name="first_name" required class="lux-input w-full px-4 py-3" placeholder="Alexander">
+            </div>
+            <div class="space-y-2">
+              <label class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Last Name</label>
+              <input type="text" name="last_name" required class="lux-input w-full px-4 py-3" placeholder="McQueen">
+            </div>
+            <div class="space-y-2">
+              <label class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Email Address</label>
+              <input type="email" name="email" required class="lux-input w-full px-4 py-3"
+                placeholder="alex@atelier.com">
+            </div>
+            <div class="space-y-2">
+              <label class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Phone Number</label>
+              <input type="tel" name="phone_number" required class="lux-input w-full px-4 py-3"
+                placeholder="+1 234 567 890">
+            </div>
+            <div class="md:col-span-2 space-y-2">
+              <label class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Delivery Address</label>
+              <input type="text" name="address" required class="lux-input w-full px-4 py-3"
+                placeholder="Suite 404, Fashion Tower">
+            </div>
+            <div class="grid grid-cols-3 md:col-span-2 gap-4">
+              <input type="text" name="city" placeholder="City" required class="lux-input px-4 py-3">
+              <input type="text" name="state" placeholder="State" required class="lux-input px-4 py-3">
+              <input type="text" name="zip" placeholder="ZIP" required class="lux-input px-4 py-3">
+            </div>
+          </form>
+        </section>
+
+        <section>
+          <h3 class="text-xs font-bold tracking-widest text-slate-400 uppercase mb-6">Delivery Method</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="shipping-card active p-5 cursor-pointer flex justify-between items-center" data-price="0"
+              data-type="standard">
+              <div>
+                <p class="text-xs font-bold uppercase">Standard Boutique</p>
+                <p class="text-[10px] text-slate-400">Complimentary (5-7 Days)</p>
+              </div>
+              <div class="radio-ui w-4 h-4 rounded-full border-2 border-gold flex items-center justify-center">
+                <div class="w-1.5 h-1.5 rounded-full bg-gold"></div>
+              </div>
+            </div>
+            <div class="shipping-card p-5 cursor-pointer flex justify-between items-center" data-price="25"
+              data-type="priority">
+              <div>
+                <p class="text-xs font-bold uppercase">Atelier Priority</p>
+                <p class="text-[10px] text-slate-400">Next Day ($25.00)</p>
+              </div>
+              <div class="radio-ui w-4 h-4 rounded-full border-2 border-slate-200"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="lg:col-span-5">
+        <div class="sticky top-28 glass-summary p-8 lg:p-10 shadow-sm border border-slate-100">
+          <h3 class="font-playfair text-xl font-bold mb-8 italic">Order Summary</h3>
+
+          <div class="space-y-6 mb-8 max-h-60 overflow-y-auto pr-2 custom-scroll">
+            {% for item in cart.items.all %}
+            <div class="flex gap-4">
+              <img src="{{ item.product.image.url }}" class="w-16 h-20 object-cover grayscale">
+              <div class="flex-1">
+                <p class="text-[10px] font-bold uppercase tracking-widest">{{ item.product.name }}</p>
+                <p class="text-[10px] text-slate-400 italic">Qty: {{ item.quantity }}</p>
+                <p class="text-xs font-bold mt-1 text-gold">${{ item.subtotal }}</p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="space-y-3 border-t border-slate-100 pt-6">
+            <div class="flex justify-between text-[11px] uppercase tracking-tighter text-slate-500">
+              <span>Subtotal</span>
+              <span>${{ cart.total_price }}</span>
+            </div>
+            <div class="flex justify-between text-[11px] uppercase tracking-tighter text-slate-500">
+              <span>Shipping</span>
+              <span id="shipping-display">Free</span>
+            </div>
+            <div class="flex justify-between text-lg font-playfair font-bold pt-4">
+              <span>Total</span>
+              <span id="total-display" class="text-gold">${{ cart.total_price }}</span>
+            </div>
+          </div>
+
+          <button id="submit-order"
+            class="w-full mt-8 py-4 bg-slate-900 text-white text-[10px] font-bold tracking-[0.3em] uppercase hover:bg-gold transition-all duration-700">
+            Confirm Purchase
+          </button>
+
+          <p class="text-center text-[9px] text-slate-400 mt-6 tracking-widest uppercase">
+            <i class="fas fa-lock mr-2"></i> SSL Encrypted Payment
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const cards = document.querySelectorAll('.shipping-card');
+    let shippingCost = 0;
+    let deliveryType = 'standard';
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        cards.forEach(c => {
+          c.classList.remove('active');
+          c.querySelector('.radio-ui').className = 'radio-ui w-4 h-4 rounded-full border-2 border-slate-200';
+          c.querySelector('.radio-ui').innerHTML = '';
+        });
+        card.classList.add('active');
+        card.querySelector('.radio-ui').className = 'radio-ui w-4 h-4 rounded-full border-2 border-gold flex items-center justify-center';
+        card.querySelector('.radio-ui').innerHTML = '<div class="w-1.5 h-1.5 rounded-full bg-gold"></div>';
+
+        shippingCost = parseFloat(card.dataset.price);
+        deliveryType = card.dataset.type;
+        updateTotals();
+      });
+    });
+
+    function updateTotals() {
+      const subtotal = parseFloat("{{ cart.total_price }}");
+      const total = subtotal + shippingCost;
+      document.getElementById('shipping-display').innerText = shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`;
+      document.getElementById('total-display').innerText = `$${total.toFixed(2)}`;
+    }
+
+    // Inside your existing <script> in the template
+    document.getElementById('submit-order').addEventListener('click', async (e) => {
+      const btn = e.target;
+      const form = document.getElementById('unified-checkout-form');
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const originalText = btn.innerText;
+      btn.innerText = "PROCESSING ATELIER ORDER...";
+      btn.disabled = true;
+      btn.classList.add('opacity-70', 'cursor-not-allowed');
+
+      const payload = {
+        first_name: form.first_name.value,
+        last_name: form.last_name.value,
+        email: form.email.value,
+        phone_number: form.phone_number.value,
+        address: form.address.value,
+        city: form.city.value,
+        state: form.state.value,
+        zip: form.zip.value,
+        delivery_type: 'home',
+        shipping_cost: shippingCost
+      };
+
+      try {
+        const response = await fetch("{% url 'checkout' %}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}"
+          },
+          body: JSON.stringify(payload)
         });
 
-        function updateTotal() {
-            // Fix: Clean subtotal parsing
-            let subtotal = parseFloat("{{ cart.total_price }}");
-            let tax = subtotal * 0.1; 
-            let total = subtotal + tax + shippingPrice;
-            
-            document.getElementById("total-price").innerText = "$" + total.toLocaleString(undefined, {minimumFractionDigits: 2});
-            document.getElementById("tax-amount").innerText = "$" + tax.toFixed(2);
+        const result = await response.json();
+
+        if (result.success) {
+          const modal = document.getElementById('success-modal');
+          const modalTitle = document.getElementById('modal-title');
+          const modalMessage = document.getElementById('modal-message');
+
+          if (result.user_status === 'returning') {
+            modalTitle.innerText = `Welcome Back, ${result.customer_name}`;
+            modalMessage.innerText = "Your order has been successfully placed. It's wonderful to have you back.";
+          } else {
+            modalTitle.innerText = "Welcome to ThreadStory";
+            modalMessage.innerText = "Your account has been created and your order is confirmed.";
+          }
+
+          modal.classList.remove('hidden');
+        } else {
+          throw new Error(result.message || "Checkout failed");
         }
 
-        document.getElementById("place-order").addEventListener("click", async () => {
-            const form = document.getElementById("checkout-form");
-            
-            // Simple validation check
-            if(!form.first_name.value || !form.email.value) {
-                alert("Please complete the delivery details.");
-                return;
-            }
+      } catch (err) {
+        alert("Atelier Error: " + err.message);
+        btn.innerText = originalText;
+        btn.disabled = false;
+        btn.classList.remove('opacity-70', 'cursor-not-allowed');
+      }
+    });
 
-            const btn = document.getElementById("place-order");
-            btn.innerText = "PROCESSING...";
-            btn.disabled = true;
+    // Function to close modal and reset form
+    function closeModal() {
+      document.getElementById('success-modal').classList.add('hidden');
+      document.getElementById('unified-checkout-form').reset();
+      // Optional: Refresh the page to clear the cart visually if needed
+      // window.location.reload(); 
+    }
 
-            const formData = {
-                first_name: form.first_name.value,
-                last_name: form.last_name.value,
-                email: form.email.value,
-                phone_number: form.phone_number.value,
-                address: form.address.value,
-                city: form.city.value,
-                state: form.state.value,
-                zip: form.zip.value,
-                shipping: shippingPrice
-            };
+  </script>
 
-            try {
-                const response = await fetch("{% url 'checkout' %}", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json", "X-CSRFToken": "{{ csrf_token }}" },
-                    body: JSON.stringify(formData)
-                });
+  <div id="success-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center px-6">
+    <div class="absolute inset-0 bg-luxury/40 backdrop-blur-sm"></div>
 
-                const result = await response.json();
-                if (result.success) {
-                    window.location.href = "{% url 'index' %}"; 
-                } else {
-                    alert("Error: " + (result.message || "Failed to place order"));
-                    btn.innerText = "PLACE YOUR ORDER";
-                    btn.disabled = false;
-                }
-            } catch (e) {
-                alert("Network error. Please try again.");
-                btn.innerText = "PLACE YOUR ORDER";
-                btn.disabled = false;
-            }
-        });
-    </script>
+    <div class="relative bg-white p-8 md:p-12 max-w-lg w-full shadow-2xl border border-slate-100 animate-up">
+      <div class="text-center">
+        <div class="w-16 h-16 bg-gold/10 text-gold rounded-full flex items-center justify-center mx-auto mb-6">
+          <i class="fas fa-check text-2xl"></i>
+        </div>
+
+        <h2 id="modal-title" class="font-playfair text-3xl font-bold italic mb-4"></h2>
+        <p id="modal-message" class="text-slate-500 text-sm leading-relaxed mb-8 tracking-wide"></p>
+
+        <div class="space-y-3">
+          <button onclick="closeModal()"
+            class="w-full py-4 bg-slate-900 text-white text-[10px] font-bold tracking-[0.3em] uppercase hover:bg-gold transition-all duration-500">
+            Continue Exploring
+          </button>
+          <p class="text-[9px] text-slate-400 uppercase tracking-[0.2em]">Order confirmation sent to your email</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>

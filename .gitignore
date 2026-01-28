@@ -1,72 +1,24 @@
-# -------------------------
-# Python
-# -------------------------
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-*.pyc
-*.pyo
-*.pyd
-*.swp
-*.swo
-*.env
-*.venv
-env/
-venv/
-ENV/
-*.egg-info/
-dist/
-build/
-
-# -------------------------
-# Django
-# -------------------------
-*.sqlite3
-db.sqlite3
+# Logs
+logs
 *.log
-local_settings.py
-media/*
-!media/**/*.jpg
-!media/**/*.jpeg
-!media/**/*.png
-!media/**/*.webp
-!media/**/*.gif
-
-staticfiles/
-
-# -------------------------
-# VS Code
-# -------------------------
-.vscode/
-
-# -------------------------
-# JetBrains IDEs
-# -------------------------
-.idea/
-*.iml
-
-# -------------------------
-# Node / Frontend
-# -------------------------
-node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-package-lock.json
-yarn.lock
+pnpm-debug.log*
+lerna-debug.log*
 
-# -------------------------
-# OS
-# -------------------------
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 .DS_Store
-Thumbs.db
-
-# -------------------------
-# Misc
-# -------------------------
-*.bak
-*.swp
-*.tmp
-*.sass-cache
-.cache/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

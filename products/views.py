@@ -3,10 +3,10 @@ from .models import Product
 
 
 # ---------------- INDEX (SHOW DATA) ----------------
-def index(request):
-    data = Product.objects.all()
-    context = {"data": data}
-    return render(request, "admin.html", context)
+# def index(request):
+#     data = Product.objects.all()
+#     context = {"data": data}
+#     return render(request, "admin.html", context)
 
 
 def home(request):

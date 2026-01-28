@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customers • ThreadStory Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
+        .font-display { font-family: 'Playfair Display', serif; }
+        .sidebar-link:hover { background: rgba(0,0,0,0.05); color: #000; }
+        .sidebar-link.active { background: #000; color: #fff; }
+    </style>
+</head>
+<body class="flex">
+
+    <aside class="w-64 h-screen sticky top-0 bg-white border-r border-gray-100 flex flex-col p-6">
+        <div class="mb-10 px-2">
+            <h1 class="font-display text-2xl font-bold tracking-tight">ThreadStory</h1>
+            <p class="text-[10px] tracking-[0.3em] text-gray-400 font-bold">ATELIER ADMIN</p>
+        </div>
+        <nav class="space-y-2 flex-1">
+            <a href="{% url 'dashboard_analytics' %}" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-500 transition">
+                <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
+            </a>
+            <a href="{% url 'admin_orders' %}" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-500 transition">
+                <i class="fa-solid fa-receipt w-5"></i> Orders
+            </a>
+            <a href="{% url 'admin_customers' %}" class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition">
+                <i class="fa-solid fa-users w-5"></i> Customers
+            </a>
+        </nav>
+        <div class="pt-6 border-t border-gray-100">
+            <a href="/" class="flex items-center gap-3 px-4 py-3 text-xs font-bold tracking-widest text-gray-400 hover:text-black transition">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> VIEW STORE
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-10 overflow-y-auto">
+        <header class="flex justify-between items-end mb-10">
+            <div>
+                <h2 class="font-display text-4xl font-bold">Client Registry</h2>
+                <p class="text-gray-500 text-sm">Manage your atelier's customer relationships and lifetime value.</p>
+            </div>
+            <div class="bg-white px-6 py-3 rounded-2xl border border-gray-100 shadow-sm">
+                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Total Clients</p>
+                <p class="text-2xl font-display font-bold text-slate-900">{{ customers.count }}</p>
+            </div>
+        </header>
+
+        <div class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 text-[10px] uppercase tracking-widest text-gray-400">
+                    <tr>
+                        <th class="px-8 py-5">Customer Details</th>
+                        <th>Contact Info</th>
+                        <th>Orders</th>
+                        <th>Total Spent</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-50">
+                    {% for customer in customers %}
+                    <tr class="hover:bg-gray-50/50 transition group">
+                        <td class="px-8 py-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-white font-bold text-xs">
+                                    {{ customer.first_name|slice:":1" }}{{ customer.last_name|slice:":1" }}
+                                </div>
+                                <div>
+                                    <p class="font-bold text-slate-900 text-sm">{{ customer.first_name }} {{ customer.last_name }}</p>
+                                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Joined {{ customer.created_at|date:"M Y" }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="text-sm text-slate-600">{{ customer.email }}</p>
+                            <p class="text-xs text-slate-400">{{ customer.phone_number }}</p>
+                        </td>
+                        <td>
+                            <span class="px-3 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded-full border border-slate-200">
+                                {{ customer.order_count }} Orders
+                            </span>
+                        </td>
+                        <td>
+                            <p class="font-display font-bold text-slate-900 text-base">${{ customer.total_spent|default:"0.00" }}</p>
+                        </td>
+                       
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="p-20 text-center text-gray-400">No customers found in the registry.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+</html>

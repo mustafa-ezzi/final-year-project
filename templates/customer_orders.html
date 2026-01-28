@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Orders • ThreadStory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        #mainNav {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #f3f4f6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="mainNav" class="fixed top-0 w-full z-50 py-4 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-6 lg:px-10 flex justify-between items-center h-14">
+            <a href="/" class="font-display text-2xl font-black tracking-tighter">THREADSTORY.</a>
+
+            <div class="hidden md:flex items-center space-x-12">
+                <a href="/" class="text-[10px] font-bold tracking-[0.3em] hover:text-gray-400">HOME</a>
+                <a href="/#collections"
+                    class="text-[10px] font-bold tracking-[0.3em] hover:text-gray-400">COLLECTIONS</a>
+
+                <div class="flex items-center gap-4">
+                    <div class="h-4 w-[1px] bg-gray-200"></div>
+                    <a href="{% url 'my_orders' %}"
+                        class="text-[10px] font-black tracking-[0.3em] text-black border-b border-black pb-1">MY
+                        ORDERS</a>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <span class="text-[11px] font-black tracking-[0.2em] uppercase italic text-gray-400">
+                    {{ request.session.customer_name }}
+                </span>
+                <a href="/cart/" class="relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 lg:px-10 pt-32 pb-20">
+
+        <header class="mb-16">
+            <h4 class="text-[10px] font-bold tracking-[0.4em] text-gray-400 uppercase mb-2">Member Archive</h4>
+            <h2 class="font-display text-5xl font-bold tracking-tight italic">Hello, {{ customer.first_name }}.</h2>
+            <p class="text-gray-500 text-sm mt-4 italic">Tracking {{ orders.count }} acquisitions in your collection.
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div class="border-l border-gray-100 pl-6 py-2">
+                <p class="text-[9px] font-bold text-gray-400 tracking-widest uppercase mb-1">Total Spent</p>
+                <p class="text-xl font-display font-bold">Calculated at Checkout</p>
+            </div>
+            <div class="border-l border-gray-100 pl-6 py-2">
+                <p class="text-[9px] font-bold text-gray-400 tracking-widest uppercase mb-1">Collection Size</p>
+                <p class="text-xl font-display font-bold">{{ orders.count }} Items</p>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="border-b border-gray-100 text-[10px] uppercase tracking-[0.2em] text-gray-400">
+                    <tr>
+                        <th class="py-6 font-bold">Order Reference</th>
+                        <th class="py-6 font-bold">Date</th>
+                        <th class="py-6 font-bold">Investment</th>
+                        <th class="py-6 font-bold">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-50">
+                    {% for order in orders %}
+                    <tr class="group hover:bg-gray-50 transition-colors">
+                        <td class="py-8 font-mono text-xs font-bold text-gray-500">#TS-{{ order.id }}</td>
+                        <td class="py-8 text-sm">{{ order.created_at|date:"M d, Y" }}</td>
+                        <td class="py-8 text-sm font-bold">{{ order.total_amount }} PKR</td>
+                        <td class="py-8">
+                            {% if order.is_paid %}
+                            <span
+                                class="text-[9px] font-black tracking-widest text-green-600 border border-green-200 px-3 py-1 rounded-full bg-green-50">AUTHENTICATED</span>
+                            {% else %}
+                            <span
+                                class="text-[9px] font-black tracking-widest text-amber-600 border border-amber-200 px-3 py-1 rounded-full bg-amber-50">PROCESSING</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="py-20 text-center text-gray-400 italic font-display text-xl">
+                            Your story hasn't started yet. <br>
+                            <a href="/#collections"
+                                class="text-xs font-bold tracking-widest text-black border-b border-black mt-4 inline-block not-italic">EXPLORE
+                                COLLECTIONS</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+
+</html>
