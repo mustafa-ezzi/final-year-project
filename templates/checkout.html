@@ -3,9 +3,11 @@
 <html lang="en">
 
 <head>
+  <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout | FashionHub Atelier</title>
+  <title>Checkout | ThreadStory</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap"
@@ -79,7 +81,7 @@
 <body class="font-inter text-slate-900 antialiased">
   <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-slate-100 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <a href="/" class="font-playfair text-2xl font-black italic tracking-tighter">FashionHub</a>
+      <a href="/" class="font-playfair text-2xl font-black italic tracking-tighter">ThreadStory</a>
       <a href="#"
         class="text-[10px] tracking-[0.2em] font-bold text-slate-400 hover:text-gold transition-all">
         <i class="fas fa-arrow-left mr-2"></i> RETURN TO SHOP
@@ -100,26 +102,26 @@
           <form id="unified-checkout-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="space-y-2">
               <label class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">First Name</label>
-              <input type="text" name="first_name" required class="lux-input w-full px-4 py-3" placeholder="Alexander">
+              <input type="text" name="first_name" required class="lux-input w-full px-4 py-3" placeholder="Your Name">
             </div>
             <div class="space-y-2">
               <label class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Last Name</label>
-              <input type="text" name="last_name" required class="lux-input w-full px-4 py-3" placeholder="McQueen">
+              <input type="text" name="last_name" required class="lux-input w-full px-4 py-3" placeholder="Last Name">
             </div>
             <div class="space-y-2">
               <label class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Email Address</label>
               <input type="email" name="email" required class="lux-input w-full px-4 py-3"
-                placeholder="alex@atelier.com">
+                placeholder="example@threadstory.com">
             </div>
             <div class="space-y-2">
               <label class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Phone Number</label>
               <input type="tel" name="phone_number" required class="lux-input w-full px-4 py-3"
-                placeholder="+1 234 567 890">
+                placeholder="+92 334 567 8905">
             </div>
             <div class="md:col-span-2 space-y-2">
               <label class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Delivery Address</label>
               <input type="text" name="address" required class="lux-input w-full px-4 py-3"
-                placeholder="Suite 404, Fashion Tower">
+                placeholder="Karachi, Pakistan">
             </div>
             <div class="grid grid-cols-3 md:col-span-2 gap-4">
               <input type="text" name="city" placeholder="City" required class="lux-input px-4 py-3">
@@ -145,7 +147,7 @@
             <div class="shipping-card p-5 cursor-pointer flex justify-between items-center" data-price="25"
               data-type="priority">
               <div>
-                <p class="text-xs font-bold uppercase">Atelier Priority</p>
+                <p class="text-xs font-bold uppercase">Priority Delivery</p>
                 <p class="text-[10px] text-slate-400">Next Day ($25.00)</p>
               </div>
               <div class="radio-ui w-4 h-4 rounded-full border-2 border-slate-200"></div>

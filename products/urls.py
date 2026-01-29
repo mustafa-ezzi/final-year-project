@@ -4,7 +4,7 @@ from . import views
 from django.conf.urls.static import static
 
 urlpatterns = [
-    # path("admin-panel/", views.index, name="index"),
+    path("admin-panel/products", views.index, name="index"),
     path("", views.home, name="home"),
     path("insert/", views.insertData, name="insert"),
     path("update/<int:id>/", views.updateData, name="update"),

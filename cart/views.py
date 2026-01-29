@@ -255,3 +255,4 @@ def my_orders_view(request):
         'customer': customer,
         'orders': orders,
     })
+

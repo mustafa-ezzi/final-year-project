@@ -1,12 +1,12 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Product
+from .models import Product, ProductImage
 
 
 # ---------------- INDEX (SHOW DATA) ----------------
-# def index(request):
-#     data = Product.objects.all()
-#     context = {"data": data}
-#     return render(request, "admin.html", context)
+def index(request):
+    data = Product.objects.all()
+    context = {"data": data}
+    return render(request, "admin.html", context)
 
 
 def home(request):
@@ -33,47 +33,60 @@ def home(request):
 # ---------------- INSERT ----------------
 def insertData(request):
     if request.method == "POST":
+        # Get data once to keep it dry
         name = request.POST.get("name")
         price = request.POST.get("price")
         description = request.POST.get("description")
-        badge = request.POST.get("badge", "").strip()  # avoid None
-        category = request.POST.get("category")  # ← must come from form
+        badge = request.POST.get("badge", "").strip()
+        category = request.POST.get("category", "Men")
         image = request.FILES.get("image")
 
-        if not category or category not in dict(Product.CATEGORY_CHOICES):
-            category = "Men"  # fallback
-
-        Product.objects.create(
+        # Create the main product
+        product = Product.objects.create(
             name=name,
             price=price,
             description=description,
             badge=badge,
-            category=category,  # ← this was missing!
+            category=category,
             image=image,
         )
+
+        # Handle the gallery
+        gallery_images = request.FILES.getlist("gallery")
+        for img in gallery_images[:4]:
+            ProductImage.objects.create(product=product, image=img)
+
         return redirect("index")
 
-    # GET → show form
     return render(request, "insert.html", {"categories": Product.CATEGORY_CHOICES})
 
 
 # ---------------- UPDATE ----------------
 def updateData(request, id):
+    # Use prefetch_related if you want to be efficient
     product = get_object_or_404(Product, id=id)
+    # Get all existing gallery images for this product
+    gallery_images = product.images.all()
 
     if request.method == "POST":
-        product.name = request.POST.get("name")
-        product.price = request.POST.get("price")
-        product.description = request.POST.get("description")
-        product.badge = request.POST.get("badge")
+        # ... (your existing field update logic) ...
 
-        if request.FILES.get("image"):
-            product.image = request.FILES.get("image")
+        # Update Gallery
+        new_gallery = request.FILES.getlist("gallery")
+        if new_gallery:
+            product.images.all().delete()  # Clears old, adds new
+            for img in new_gallery[:4]:
+                ProductImage.objects.create(product=product, image=img)
 
         product.save()
         return redirect("index")
 
-    context = {"product": product}
+    # Pass 'gallery' to the context
+    context = {
+        "d": product,
+        "gallery": gallery_images,
+        "categories": Product.CATEGORY_CHOICES,
+    }
     return render(request, "update.html", context)
 
 
@@ -82,8 +95,6 @@ def deleteData(request, id):
     product = Product.objects.get(id=id)
     product.delete()
     return redirect("index")
-
-
 
 
 def viewProduct(request, id):

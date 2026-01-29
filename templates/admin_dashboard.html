@@ -3,6 +3,8 @@
 
 <head>
     {% load static %}
+  <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ThreadStory • Atelier Admin</title>
@@ -36,33 +38,38 @@
 
 <body class="flex">
 
-    <aside class="w-64 h-screen sticky top-0 bg-white border-r border-gray-100 flex flex-col p-6">
-        <div class="mb-10 px-2">
-            <h1 class="font-display text-2xl font-bold tracking-tight">ThreadStory</h1>
-            <p class="text-[10px] tracking-[0.3em] text-gray-400 font-bold">ATELIER ADMIN</p>
+    
+
+    <aside class="w-72 h-screen sticky top-0 bg-white border-r border-stone-100 flex flex-col z-50">
+        <div class="p-10">
+            <h1 class="font-playfair text-2xl font-bold tracking-tighter transition-all">
+                THREADSTORY<span class="text-gold">.</span>
+            </h1>
+            <p class="text-[9px] tracking-[0.4em] text-stone-400 mt-2 uppercase font-bold">Atelier Control</p>
         </div>
 
-        <nav class="space-y-2 flex-1">
-            <a href="{% url 'dashboard_analytics' %}"
-                class="sidebar-link {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %} flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition">
-                <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
+        <nav class="flex-1 px-6 space-y-2">
+            <a href="{% url 'dashboard_analytics' %}" class="sidebar-link active flex items-center gap-4 py-4 px-4 text-[11px] font-bold tracking-widest uppercase">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                Dashboard
             </a>
-
-            <a href="{% url 'admin_orders' %}"
-                class="sidebar-link {% if request.resolver_match.url_name == 'admin_orders' %}active{% endif %} flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-500 transition">
-                <i class="fa-solid fa-receipt w-5"></i> Orders
+            <a href="{% url 'index' %}" class="sidebar-link flex items-center gap-4 py-4 px-4 text-[11px] font-bold tracking-widest uppercase text-stone-400 hover:text-dark">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                Products
             </a>
-
-            <a href="{% url 'admin_customers' %}"
-                class="sidebar-link {% if request.resolver_match.url_name == 'admin_customers' %}active{% endif %} flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-500 transition">
-                <i class="fa-solid fa-users w-5"></i> Customers
+            <a href="{% url 'admin_orders' %}" class="sidebar-link flex items-center gap-4 py-4 px-4 text-[11px] font-bold tracking-widest uppercase text-stone-400 hover:text-dark">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                Orders
+            </a>
+            <a href="{% url 'admin_customers' %}" class="sidebar-link flex items-center gap-4 py-4 px-4 text-[11px] font-bold tracking-widest uppercase text-stone-400 hover:text-dark">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                Customers
             </a>
         </nav>
 
-        <div class="pt-6 border-t border-gray-100">
-            <a href="/"
-                class="flex items-center gap-3 px-4 py-3 text-xs font-bold tracking-widest text-gray-400 hover:text-black transition">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i> VIEW STORE
+        <div class="p-8">
+            <a href="/" class="block text-center py-4 border border-dark text-[10px] font-bold tracking-widest uppercase hover:bg-dark hover:text-gray-400 transition-all">
+                View Boutique
             </a>
         </div>
     </aside>
