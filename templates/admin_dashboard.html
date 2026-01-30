@@ -3,99 +3,127 @@
 
 <head>
     {% load static %}
-  <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ThreadStory • Atelier Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f9fafb;
-        }
-
-        .font-display {
-            font-family: 'Playfair Display', serif;
-        }
-
-        .sidebar-link:hover {
-            background: rgba(0, 0, 0, 0.05);
-            color: #000;
-        }
-
-        .sidebar-link.active {
-            background: #000;
-            color: #fff;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
+        .font-display { font-family: 'Playfair Display', serif; }
+        .sidebar-link:hover { background: rgba(0, 0, 0, 0.05); color: #000; }
+        .sidebar-link.active { background: #000; color: #fff; }
+        .text-gold { color: #B8924A; }
+        
+        /* Smooth transition for mobile sidebar */
+        #sidebar { transition: transform 0.3s ease-in-out; }
     </style>
 </head>
 
-<body class="flex">
+<body class="{% if not request.session.is_admin_authenticated %}flex items-center justify-center h-screen bg-stone-50{% else %}block lg:flex min-h-screen{% endif %}">
 
-    
+    {% if not request.session.is_admin_authenticated %}
+    <div class="w-full max-w-md p-8 md:p-12 bg-white rounded-[40px] shadow-2xl border border-stone-100 text-center mx-4">
+        <h1 class="font-display text-3xl font-bold tracking-tighter mb-2">
+            THREADSTORY<span class="text-gold">.</span>
+        </h1>
+        <p class="text-[9px] tracking-[0.4em] text-stone-400 uppercase font-bold mb-10">Administrative Access</p>
 
-    <aside class="w-72 h-screen sticky top-0 bg-white border-r border-stone-100 flex flex-col z-50">
-        <div class="p-10">
-            <h1 class="font-playfair text-2xl font-bold tracking-tighter transition-all">
-                THREADSTORY<span class="text-gold">.</span>
-            </h1>
-            <p class="text-[9px] tracking-[0.4em] text-stone-400 mt-2 uppercase font-bold">Atelier Control</p>
+        <form method="POST" action="{% url 'admin_login_verify' %}" class="space-y-6">
+            {% csrf_token %}
+            <div class="text-left">
+                <input type="text" name="username" placeholder="Username" required
+                    class="w-full border-b border-stone-200 py-4 px-2 focus:outline-none focus:border-black transition-colors font-medium text-sm">
+            </div>
+            <div class="text-left">
+                <input type="password" name="password" placeholder="Password" required
+                    class="w-full border-b border-stone-200 py-4 px-2 focus:outline-none focus:border-black transition-colors font-medium text-sm">
+            </div>
+
+            {% if error %}
+            <p class="text-red-500 text-[10px] font-bold tracking-widest uppercase">{{ error }}</p>
+            {% endif %}
+
+            <button type="submit"
+                class="w-full bg-black text-white py-5 rounded-full text-[10px] font-bold tracking-[0.3em] hover:bg-stone-800 transition-all shadow-lg uppercase">
+                Login to Atelier
+            </button>
+        </form>
+    </div>
+
+    {% else %}
+    <div class="lg:hidden flex items-center justify-between p-4 bg-white border-b sticky top-0 z-[60]">
+        <h1 class="font-display text-xl font-bold tracking-tighter">THREADSTORY<span class="text-gold">.</span></h1>
+        <button onclick="toggleSidebar()" class="p-2 text-black focus:outline-none">
+            <i class="fa-solid fa-bars-staggered text-xl"></i>
+        </button>
+    </div>
+
+    <aside id="sidebar" class="fixed inset-y-0 left-0 w-72 bg-white border-r border-stone-100 flex flex-col z-[100] transform -translate-x-full lg:translate-x-0 lg:sticky lg:top-0 lg:h-screen">
+        <div class="p-10 flex justify-between items-center">
+            <div>
+                <h1 class="font-display text-2xl font-bold tracking-tighter">THREADSTORY<span class="text-gold">.</span></h1>
+                <p class="text-[9px] tracking-[0.4em] text-stone-400 mt-2 uppercase font-bold">Atelier Control</p>
+            </div>
+            <button onclick="toggleSidebar()" class="lg:hidden text-stone-400 hover:text-black">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
         </div>
 
         <nav class="flex-1 px-6 space-y-2">
-            <a href="{% url 'dashboard_analytics' %}" class="sidebar-link active flex items-center gap-4 py-4 px-4 text-[11px] font-bold tracking-widest uppercase">
+            <a href="{% url 'dashboard_analytics' %}" class="sidebar-link active flex items-center gap-4 py-4 px-4 text-[11px] font-bold tracking-widest uppercase rounded-xl transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 Dashboard
             </a>
-            <a href="{% url 'index' %}" class="sidebar-link flex items-center gap-4 py-4 px-4 text-[11px] font-bold tracking-widest uppercase text-stone-400 hover:text-dark">
+            <a href="{% url 'index' %}" class="sidebar-link flex items-center gap-4 py-4 px-4 text-[11px] font-bold tracking-widest uppercase text-stone-400 hover:text-dark rounded-xl transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                 Products
             </a>
-            <a href="{% url 'admin_orders' %}" class="sidebar-link flex items-center gap-4 py-4 px-4 text-[11px] font-bold tracking-widest uppercase text-stone-400 hover:text-dark">
+            <a href="{% url 'admin_orders' %}" class="sidebar-link flex items-center gap-4 py-4 px-4 text-[11px] font-bold tracking-widest uppercase text-stone-400 hover:text-dark rounded-xl transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                 Orders
             </a>
-            <a href="{% url 'admin_customers' %}" class="sidebar-link flex items-center gap-4 py-4 px-4 text-[11px] font-bold tracking-widest uppercase text-stone-400 hover:text-dark">
+            <a href="{% url 'admin_customers' %}" class="sidebar-link flex items-center gap-4 py-4 px-4 text-[11px] font-bold tracking-widest uppercase text-stone-400 hover:text-dark rounded-xl transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 Customers
             </a>
         </nav>
 
-        <div class="p-8">
-            <a href="/" class="block text-center py-4 border border-dark text-[10px] font-bold tracking-widest uppercase hover:bg-dark hover:text-gray-400 transition-all">
+        <div class="p-8 space-y-2">
+            <a href="{% url 'admin_logout' %}" class="block text-center py-2 text-[10px] font-bold text-red-400 hover:text-red-600 uppercase tracking-widest">Logout</a>
+            <a href="/" class="block text-center py-4 border border-black text-[10px] font-bold tracking-widest uppercase hover:bg-black hover:text-white transition-all">
                 View Boutique
             </a>
         </div>
     </aside>
 
-    <main class="flex-1 p-10 overflow-y-auto">
+    <div id="overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-[90] hidden lg:hidden"></div>
 
-        <header class="flex justify-between items-end mb-10">
+    <main class="flex-1 p-6 md:p-10 overflow-y-auto">
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
             <div>
-                <h2 class="font-display text-4xl font-bold">Executive Overview</h2>
+                <h2 class="font-display text-3xl md:text-4xl font-bold">Executive Overview</h2>
                 <p class="text-gray-500 text-sm">Welcome back. Here is what's happening today.</p>
             </div>
             <button onclick="document.getElementById('add-modal').classList.remove('hidden')"
-                class="bg-black text-white px-6 py-3 rounded-full text-xs font-bold tracking-widest hover:bg-gray-800 transition shadow-lg">
+                class="bg-black text-white px-6 py-3 rounded-full text-xs font-bold tracking-widest hover:bg-gray-800 transition shadow-lg w-full md:w-auto">
                 + NEW PRODUCT
             </button>
         </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
-                <p class="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Total Revenue</p>
-                <h3 class="text-3xl font-display font-bold mt-2">${{ total_sales|floatformat:2 }}</h3>
-                <p class="text-xs text-green-500 mt-2 font-semibold">Today: +${{ today_sales }}</p>
-            </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-12">
+           <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+    <p class="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Total Revenue</p>
+    <h3 class="text-3xl font-display font-bold mt-2">${{ total_sales|floatformat:2 }}</h3>
+    <p class="text-xs text-green-500 mt-2 font-semibold">Today: +${{ today_sales }}</p>
+</div>
             <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
                 <p class="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Active Orders</p>
-                <h3 class="text-3xl font-display font-bold mt-2">{{ active_orders  }}</h3>
+                <h3 class="text-3xl font-display font-bold mt-2">{{ active_orders }}</h3>
             </div>
             <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
                 <p class="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Inventory Count</p>
@@ -107,43 +135,42 @@
             </div>
         </div>
 
-        <div class="grid lg:grid-cols-3 gap-8">
-            <div id="orders"
-                class="lg:col-span-2 bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            <div id="orders" class="xl:col-span-2 bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
                 <div class="p-6 border-b border-gray-50 flex justify-between items-center">
                     <h4 class="font-bold text-lg">Recent Orders</h4>
                     <a href="#" class="text-xs font-bold text-gray-400 hover:text-black">VIEW ALL</a>
                 </div>
-                <table class="w-full text-left">
-                    <thead class="bg-gray-50 text-[10px] uppercase tracking-widest text-gray-400">
-                        <tr>
-                            <th class="px-6 py-4">Order ID</th>
-                            <th>Customer</th>
-                            <th>Status</th>
-                            <th>Total</th>
-                            <th class="px-6">Date</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-sm">
-                        {% for order in recent_orders %}
-                        <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
-                            <td class="px-6 py-4 font-mono font-bold text-gray-400">#{{ order.id }}</td>
-                            <td class="font-semibold">{{ order.customer.first_name }}</td>
-                            <td>
-                                {% if order.is_paid %}
-                                <span
-                                    class="px-2 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded-md">PAID</span>
-                                {% else %}
-                                <span
-                                    class="px-2 py-1 bg-amber-100 text-amber-700 text-[10px] font-bold rounded-md">PENDING</span>
-                                {% endif %}
-                            </td>
-                            <td class="font-bold">${{ order.total_amount }}</td>
-                            <td class="px-6 text-gray-400 text-xs">{{ order.created_at|date:"M d, Y" }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left min-w-[600px]">
+                        <thead class="bg-gray-50 text-[10px] uppercase tracking-widest text-gray-400">
+                            <tr>
+                                <th class="px-6 py-4">Order ID</th>
+                                <th>Customer</th>
+                                <th>Status</th>
+                                <th>Total</th>
+                                <th class="px-6">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            {% for order in recent_orders %}
+                            <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 font-mono font-bold text-gray-400">#{{ order.id }}</td>
+                                <td class="font-semibold">{{ order.customer.first_name }}</td>
+                                <td>
+                                    {% if order.is_paid %}
+                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded-md">PAID</span>
+                                    {% else %}
+                                    <span class="px-2 py-1 bg-amber-100 text-amber-700 text-[10px] font-bold rounded-md">PENDING</span>
+                                    {% endif %}
+                                </td>
+                                <td class="font-bold">${{ order.total_amount }}</td>
+                                <td class="px-6 text-gray-400 text-xs">{{ order.created_at|date:"M d, Y" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div id="inventory" class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
@@ -160,43 +187,53 @@
                     </div>
                     {% endfor %}
                 </div>
-                <a href="{% url 'home' %}"
-                    class="block text-center mt-8 py-3 bg-gray-50 rounded-xl text-xs font-bold tracking-widest hover:bg-black hover:text-white transition">FULL
-                    INVENTORY</a>
+                <a href="{% url 'home' %}" class="block text-center mt-8 py-3 bg-gray-50 rounded-xl text-xs font-bold tracking-widest hover:bg-black hover:text-white transition">FULL INVENTORY</a>
             </div>
         </div>
     </main>
 
-    <div id="add-modal"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center">
-        <div class="bg-white rounded-3xl p-10 max-w-2xl w-full mx-4 shadow-2xl">
+    <div id="add-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 md:p-10 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
             <div class="flex justify-between items-center mb-8">
-                <h3 class="font-display text-3xl font-bold">New Product</h3>
+                <h3 class="font-display text-2xl md:text-3xl font-bold">New Product</h3>
                 <button onclick="document.getElementById('add-modal').classList.add('hidden')"
-                    class="text-gray-400 hover:text-black text-xl">&times;</button>
+                    class="text-gray-400 hover:text-black text-2xl leading-none">&times;</button>
             </div>
-            <form method="POST" enctype="multipart/form-data" action="{% url 'insert' %}"
-                class="grid grid-cols-2 gap-6">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'insert' %}" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {% csrf_token %}
-                <input name="name" placeholder="Name"
-                    class="col-span-2 border-b py-3 focus:outline-none focus:border-black font-semibold" required>
-                <input name="price" type="number" placeholder="Price"
-                    class="border-b py-3 focus:outline-none focus:border-black">
-                <select name="category" class="border-b py-3 focus:outline-none focus:border-black">
+                <input name="name" placeholder="Name" class="md:col-span-2 border-b py-3 focus:outline-none focus:border-black font-semibold" required>
+                <input name="price" type="number" placeholder="Price" class="border-b py-3 focus:outline-none focus:border-black">
+                <select name="category" class="border-b py-3 focus:outline-none focus:border-black bg-white">
                     <option>Men</option>
                     <option>Women</option>
                     <option>Kids</option>
                 </select>
-                <input name="badge" placeholder="Badge (Optional)"
-                    class="col-span-2 border-b py-3 focus:outline-none focus:border-black">
-                <input type="file" name="image" class="col-span-2 text-xs py-4" required>
-                <button
-                    class="col-span-2 bg-black text-white py-4 rounded-xl font-bold text-xs tracking-[0.3em]">PUBLISH
-                    PRODUCT</button>
+                <input name="badge" placeholder="Badge (Optional)" class="md:col-span-2 border-b py-3 focus:outline-none focus:border-black">
+                <div class="md:col-span-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Product Image</label>
+                    <input type="file" name="image" class="w-full text-xs py-2 mt-1" required>
+                </div>
+                <button class="md:col-span-2 bg-black text-white py-4 rounded-xl font-bold text-xs tracking-[0.3em] hover:bg-gray-800 transition">PUBLISH PRODUCT</button>
             </form>
         </div>
     </div>
 
-</body>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const isHidden = sidebar.classList.contains('-translate-x-full');
 
+            if (isHidden) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+    </script>
+    {% endif %}
+
+</body>
 </html>

@@ -112,3 +112,23 @@ def viewProduct(request, id):
 
 def about(request):
     return render(request, "about.html")
+
+
+def admin_login_verify(request):
+    if request.method == "POST":
+        user = request.POST.get('username')
+        pas = request.POST.get('password')
+        
+        # YOUR STATIC CREDENTIALS
+        if user == "threadstory" and pas == "12345":
+            request.session['is_admin_authenticated'] = True
+            return redirect('dashboard_analytics')
+        else:
+            return render(request, "admin_template.html", {"error": "Invalid Access Key"})
+    
+    return redirect('dashboard_analytics')
+
+def admin_logout(request):
+    if 'is_admin_authenticated' in request.session:
+        del request.session['is_admin_authenticated']
+    return redirect('dashboard_analytics')
