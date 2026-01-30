@@ -10,6 +10,7 @@ urlpatterns = [
     path("update/<int:id>/", views.updateData, name="update"),
     path("delete/<int:id>/", views.deleteData, name="delete"),
     path("product/<int:id>/", views.viewProduct, name="view-product"),
+    path('about/', views.about, name='about'),
 ]
 
 if settings.DEBUG:

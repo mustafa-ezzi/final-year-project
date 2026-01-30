@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The ThreadStory | ThreadStory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        .font-display { font-family: 'Playfair Display', serif; }
+        
+        /* Navbar Logic from your provided snippet */
+        #mainNav { background-color: rgba(0, 0, 0, 0.2); backdrop-filter: blur(8px); }
+        #mainNav.nav-active {
+            background-color: rgba(255, 255, 255, 0.9) !important;
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.5rem !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+        }
+        #mainNav .nav-text, #mainNav span, #mainNav svg { color: #ffffff; stroke: #ffffff; transition: all 0.5s ease; }
+        #mainNav.nav-active .nav-text, #mainNav.nav-active span, #mainNav.nav-active svg { color: #121212 !important; stroke: #121212 !important; }
+        #mainNav.nav-active #logoStage { transform: translateY(-2.5rem); }
+        .bg-gold { background-color: #B8924A; }
+        .text-gold { color: #B8924A; }
+    </style>
+</head>
+<body class="bg-white">
+
+    <nav id="mainNav" class="fixed top-0 w-full z-50 py-6 transition-all duration-700 ease-in-out">
+        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <div class="flex justify-between items-center h-14">
+                <a href="/" class="flex items-center h-10 overflow-hidden group">
+                    <div id="logoStage" class="-mb-[68px] transition-transform duration-700 ease-in-out flex flex-col items-start">
+                        <div class="h-10 flex items-center">
+                            <span class="font-display text-xl font-black tracking-tighter italic uppercase text-white">THREADSTORY<span class="text-gold">.</span></span>
+                        </div>
+                        <div class="h-20 -mt-[24px] flex items-center">
+                            <img src="{% static 'logo.png' %}" alt="Logo" class="h-8 w-auto object-contain" />
+                        </div>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center space-x-12">
+                    <a href="/" class="nav-text text-[10px] font-bold tracking-[0.3em]">HOME</a>
+                    <a href="/#collections" class="nav-text text-[10px] font-bold tracking-[0.3em]">COLLECTIONS</a>
+                    <a href="#contact" class="nav-text text-[10px] font-bold tracking-[0.3em]">CONTACT</a>
+                </div>
+                <div class="flex items-center space-x-8">
+                    <a href="/cart/" class="nav-text relative">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative h-[60vh] flex items-center justify-center bg-black overflow-hidden">
+        <div class="absolute inset-0 opacity-40">
+            <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e12?q=80&w=2070" class="w-full h-full object-cover" alt="Background">
+        </div>
+        <div class="relative z-10 text-center">
+            <h1 class="font-display text-white text-6xl md:text-8xl italic">The ThreadStory</h1>
+            <p class="text-white/60 text-[10px] tracking-[0.6em] uppercase mt-4">Where every thread tells a story</p>
+        </div>
+    </section>
+
+    <section class="py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-[11px] font-bold tracking-[0.4em] text-gold uppercase mb-8">Our Philosophy</h2>
+            <p class="font-display text-3xl md:text-4xl leading-relaxed text-stone-800">
+                ThreadStory was born from a desire to merge <span class="italic font-light">timeless elegance</span> with modern digital ease. We don’t just sell clothing; we curate confidence for the modern soul.
+            </p>
+            <div class="mt-12 flex justify-center gap-8">
+                <a href="#" class="text-stone-400 hover:text-black transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+                <a href="#" class="text-stone-400 hover:text-black transition-colors"><i class="fa-brands fa-facebook-f text-xl"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16">
+                <h3 class="font-display text-5xl italic">The Curators</h3>
+                <p class="text-stone-400 text-xs tracking-widest uppercase mt-2">The minds behind the thread</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="group">
+                    <div class="aspect-[3/4] bg-stone-200 mb-6 overflow-hidden relative">
+                        <div class="absolute inset-0 flex items-center justify-center text-stone-400 font-display text-4xl italic group-hover:scale-110 transition-transform duration-700">MM</div>
+                    </div>
+                    <h4 class="text-xs font-bold tracking-widest uppercase">Mustafa Moiz</h4>
+                    <p class="text-[10px] text-gold font-bold tracking-widest uppercase mb-4">Project Lead & Quality Control</p>
+                    <p class="text-stone-500 text-sm italic font-light leading-relaxed">Overseeing the ThreadStory's operations, identifying bugs, and ensuring every digital stitch meets our premium standard.</p>
+                </div>
+
+                <div class="group">
+                    <div class="aspect-[3/4] bg-stone-200 mb-6 overflow-hidden relative">
+                        <div class="absolute inset-0 flex items-center justify-center text-stone-400 font-display text-4xl italic group-hover:scale-110 transition-transform duration-700">AS</div>
+                    </div>
+                    <h4 class="text-xs font-bold tracking-widest uppercase">Aliyan Saleem</h4>
+                    <p class="text-[10px] text-gold font-bold tracking-widest uppercase mb-4">UI Designer & E-Store Manager</p>
+                    <p class="text-stone-500 text-sm italic font-light leading-relaxed">The visual architect. Aliyan crafted the digital aesthetic and manages the daily flow of the ThreadStory storefront.</p>
+                </div>
+
+                <div class="group">
+                    <div class="aspect-[3/4] bg-stone-200 mb-6 overflow-hidden relative">
+                        <div class="absolute inset-0 flex items-center justify-center text-stone-400 font-display text-4xl italic group-hover:scale-110 transition-transform duration-700">MF</div>
+                    </div>
+                    <h4 class="text-xs font-bold tracking-widest uppercase">Mohammad Faizan</h4>
+                    <p class="text-[10px] text-gold font-bold tracking-widest uppercase mb-4">Backend Architect</p>
+                    <p class="text-stone-500 text-sm italic font-light leading-relaxed">The mastermind behind the logic. Faizan engineered the core systems that power our checkout and inventory.</p>
+                </div>
+
+                <div class="group">
+                    <div class="aspect-[3/4] bg-stone-200 mb-6 overflow-hidden relative">
+                        <div class="absolute inset-0 flex items-center justify-center text-stone-400 font-display text-4xl italic group-hover:scale-110 transition-transform duration-700">SS</div>
+                    </div>
+                    <h4 class="text-xs font-bold tracking-widest uppercase">Shabbir Safdar</h4>
+                    <p class="text-[10px] text-gold font-bold tracking-widest uppercase mb-4">QA Tester & Backend Dev</p>
+                    <p class="text-stone-500 text-sm italic font-light leading-relaxed">Dual-role expert. Shabbir refined the backend logic while serving as the primary shield against system bugs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 border-t border-stone-100 text-center">
+        <p class="text-[9px] tracking-[0.4em] text-stone-400 uppercase">© 2026 ThreadStory ThreadStory. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Navbar scroll logic
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                nav.classList.add('nav-active');
+            } else {
+                nav.classList.remove('nav-active');
+            }
+        });
+    </script>
+</body>
+</html>

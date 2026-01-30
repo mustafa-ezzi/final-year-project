@@ -257,14 +257,15 @@
       <div class="flex justify-between items-center h-14">
 
         <a href="/" class="flex items-center h-10 overflow-hidden group">
-          <div id="logoStage" class="-mb-[68px] transition-transform duration-700 ease-in-out flex flex-col items-start">
+          <div id="logoStage"
+            class="-mb-[68px] transition-transform duration-700 ease-in-out flex flex-col items-start">
             <div class="h-10 flex items-center">
               <span class="font-display text-xl font-black tracking-tighter italic uppercase text-white">
                 THREADSTORY<span class="text-gold">.</span>
               </span>
             </div>
 
-             <div class="h-20 -mt-[24px] flex items-center">
+            <div class="h-20 -mt-[24px] flex items-center">
               <img src="{% static 'logo.png' %}" alt="Logo" class="h-8 w-auto object-contain" />
             </div>
 
@@ -274,6 +275,10 @@
         <div class="hidden md:flex items-center space-x-12">
           <a href="/"
             class="nav-text text-[10px] font-bold tracking-[0.3em] hover:text-gray-400 transition-colors">HOME</a>
+
+          <a href="{% url 'about' %}"
+            class="nav-text text-[10px] font-bold tracking-[0.3em] hover:text-gray-400 transition-colors">ABOUT</a>
+
           <a href="/#collections"
             class="nav-text text-[10px] font-bold tracking-[0.3em] hover:text-gray-400 transition-colors">COLLECTIONS</a>
 
@@ -299,8 +304,7 @@
           {% else %}
           <a href="/#contact"
             class="nav-text text-[10px] font-bold tracking-[0.3em] hover:text-gray-400 transition-colors">CONTACT</a>
-          <a href="/login/"
-            class="nav-text text-[10px] font-bold tracking-[0.3em] hover:text-gray-400 transition-colors">SIGN IN</a>
+        
           {% endif %}
         </div>
 
@@ -362,8 +366,7 @@
         {% else %}
         <a href="/#contact"
           class="nav-text text-[10px] font-bold tracking-[0.3em] hover:text-gray-400 transition-colors">CONTACT</a>
-        <a href="/login/"
-          class="nav-text text-[10px] font-bold tracking-[0.3em] hover:text-gray-400 transition-colors">SIGN IN</a>
+       
         {% endif %}
 
         {% if request.session.customer_name %}

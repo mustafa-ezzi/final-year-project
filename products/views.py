@@ -107,3 +107,8 @@ def viewProduct(request, id):
 
     context = {"product": product}
     return render(request, "view.html", context)
+
+
+
+def about(request):
+    return render(request, "about.html")
