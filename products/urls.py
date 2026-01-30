@@ -11,6 +11,8 @@ urlpatterns = [
     path("delete/<int:id>/", views.deleteData, name="delete"),
     path("product/<int:id>/", views.viewProduct, name="view-product"),
     path('about/', views.about, name='about'),
+    path('admin-verify/', views.admin_login_verify, name='admin_login_verify'),
+path('admin-logout/', views.admin_logout, name='admin_logout'),
 ]
 
 if settings.DEBUG:
