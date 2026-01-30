@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
     <meta charset="UTF-8" />
@@ -31,145 +30,169 @@
 
     <style>
         body { background-color: #F9F8F6; font-family: 'Inter', sans-serif; }
-        .glass-panel { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(0, 0, 0, 0.05); }
-        .input-atelier { background: transparent; border-bottom: 1px solid #E5E1DA; padding: 0.75rem 0; transition: border-color 0.4s; width: 100%;}
+        .glass-panel { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border: 1px solid rgba(0,0,0,0.05); }
+        .input-atelier { background: transparent; border-bottom: 1px solid #E5E1DA; padding: 0.75rem 0; width: 100%; }
         .input-atelier:focus { outline: none; border-bottom-color: #B8924A; }
-        .sidebar-link { transition: all 0.3s ease; }
     </style>
 </head>
 
 <body class="flex">
 
-    <aside class="w-72 h-screen sticky top-0 bg-white border-r border-stone-100 flex flex-col z-50">
-        <div class="p-10">
-            <h1 class="font-playfair text-2xl font-bold tracking-tighter">
-                THREADSTORY<span class="text-gold">.</span>
-            </h1>
-            <p class="text-[9px] tracking-[0.4em] text-stone-400 mt-2 uppercase font-bold">Atelier Control</p>
-        </div>
+<!-- SIDEBAR -->
+<aside class="w-72 h-screen sticky top-0 bg-white border-r flex flex-col z-50">
+    <div class="p-10">
+        <h1 class="font-playfair text-2xl font-bold">
+            THREADSTORY<span class="text-gold">.</span>
+        </h1>
+        <p class="text-[9px] tracking-[0.4em] text-stone-400 mt-2 uppercase font-bold">
+            Atelier Control
+        </p>
+    </div>
 
-        <nav class="flex-1 px-6 space-y-2">
-            <a href="{% url 'index' %}" class="sidebar-link flex items-center gap-4 py-4 px-4 text-[11px] font-bold tracking-widest uppercase text-stone-400 hover:text-dark">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Back to Inventory
-            </a>
-        </nav>
-    </aside>
+    <nav class="flex-1 px-6">
+        <a href="{% url 'index' %}"
+           class="flex items-center gap-4 py-4 px-4 text-[11px] font-bold tracking-widest uppercase text-stone-400 hover:text-dark">
+            ← Back to Inventory
+        </a>
+    </nav>
+</aside>
 
-    <main class="flex-1 p-12">
-        <header class="mb-12">
-            <h4 class="text-[10px] font-bold tracking-[0.4em] text-gold uppercase mb-2">Editor Suite</h4>
-            <h2 class="font-playfair text-4xl font-bold">Refine <span class="italic font-light text-stone-400">"{{ d.name }}"</span></h2>
-        </header>
+<!-- MAIN -->
+<main class="flex-1 p-12">
 
-        <div class="max-w-6xl">
-            <form action="/update/{{ d.id }}/" method="post" enctype="multipart/form-data" class="grid lg:grid-cols-12 gap-12">
-                {% csrf_token %}
-                <input type="hidden" name="id" value="{{ d.id }}">
+<header class="mb-12">
+    <h4 class="text-[10px] font-bold tracking-[0.4em] text-gold uppercase mb-2">
+        Editor Suite
+    </h4>
+    <h2 class="font-playfair text-4xl font-bold">
+        Refine <span class="italic text-stone-400">“{{ d.name }}”</span>
+    </h2>
+</header>
 
-                <div class="lg:col-span-5">
+<form action="{% url 'update' d.id %}"
+      method="POST"
+      enctype="multipart/form-data"
+      class="grid lg:grid-cols-12 gap-12">
+
+{% csrf_token %}
+
+<!-- LEFT: IMAGES -->
+<div class="lg:col-span-5">
     <div class="sticky top-12">
-        <p class="text-[10px] font-bold tracking-widest text-stone-400 uppercase mb-6">Atelier Imagery</p>
-        
+
+        <p class="text-[10px] font-bold tracking-widest text-stone-400 uppercase mb-6">
+            Atelier Imagery
+        </p>
+
         <div class="grid grid-cols-2 gap-4">
-            <div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-stone-200 border-2 border-gold group shadow-sm col-span-2">
+
+            <!-- MAIN IMAGE -->
+            <div class="relative aspect-[3/4] col-span-2 overflow-hidden rounded-xl border-2 border-gold">
                 <img id="preview-main" src="{{ d.image.url }}" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all flex items-center justify-center">
-                    <label class="cursor-pointer bg-white/90 px-6 py-3 rounded-full text-[9px] font-bold tracking-widest uppercase hover:bg-gold hover:text-white transition-all">
+                <label class="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer">
+                    <span class="bg-white px-6 py-3 rounded-full text-[9px] font-bold uppercase">
                         Update Cover
-                        <input type="file" name="image" onchange="previewUpdate(this, 'preview-main')" class="hidden">
-                    </label>
-                </div>
+                    </span>
+                    <input type="file" name="image" class="hidden"
+                           onchange="previewUpdate(this,'preview-main')">
+                </label>
             </div>
 
+            <!-- GALLERY IMAGES -->
             {% for img in gallery %}
-            <div class="relative aspect-square overflow-hidden rounded-xl bg-stone-100 border border-stone-200 group">
+            <div class="relative aspect-square overflow-hidden rounded-xl border">
                 <img id="prev-{{ forloop.counter }}" src="{{ img.image.url }}" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-dark/20 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center">
-                    <label class="cursor-pointer text-white">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                        <input type="file" name="gallery" onchange="previewUpdate(this, 'prev-{{ forloop.counter }}')" class="hidden">
-                    </label>
-                </div>
             </div>
             {% endfor %}
 
-            {% with gallery_count=gallery.count %}
-                {% if gallery_count < 3 %}
-                    <div class="relative aspect-square overflow-hidden rounded-xl bg-stone-50 border-2 border-dashed border-stone-200 group flex items-center justify-center">
-                        <input type="file" name="gallery" onchange="previewUpdate(this, 'new-slot')" class="absolute inset-0 opacity-0 cursor-pointer z-10">
-                        <div class="text-stone-300 group-hover:text-gold transition-colors text-center p-2">
-                            <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                            <p class="text-[7px] font-bold uppercase mt-1">Add Detail</p>
-                        </div>
-                        <img id="new-slot" class="hidden absolute inset-0 w-full h-full object-cover z-0">
-                    </div>
-                {% endif %}
-            {% endwith %}
+            <!-- ADD NEW GALLERY -->
+            <div class="relative aspect-square overflow-hidden rounded-xl border-2 border-dashed flex items-center justify-center">
+                <input type="file"
+                       name="gallery"
+                       multiple
+                       class="absolute inset-0 opacity-0 cursor-pointer"
+                       onchange="previewMultiple(this)">
+                <span class="text-[10px] uppercase tracking-widest text-stone-400">
+                    Add Gallery
+                </span>
+            </div>
+
         </div>
     </div>
 </div>
 
-                <div class="lg:col-span-7 glass-panel p-10 rounded-2xl shadow-sm h-fit">
-                    <div class="space-y-8">
-                        
-                        <div class="flex flex-col">
-                            <label class="text-[10px] font-bold tracking-widest text-stone-400 uppercase">Product Name</label>
-                            <input type="text" name="name" value="{{ d.name }}" class="input-atelier text-lg font-playfair font-bold" required>
-                        </div>
+<!-- RIGHT: FORM -->
+<div class="lg:col-span-7 glass-panel p-10 rounded-2xl">
 
-                        <div class="grid grid-cols-2 gap-8">
-                            <div class="flex flex-col">
-                                <label class="text-[10px] font-bold tracking-widest text-stone-400 uppercase">Investment (PKR)</label>
-                                <input type="number" step="0.01" name="price" value="{{ d.price }}" class="input-atelier font-inter font-semibold" required>
-                            </div>
-                            <div class="flex flex-col">
-                                <label class="text-[10px] font-bold tracking-widest text-stone-400 uppercase">Category</label>
-                                <select name="category" class="input-atelier bg-transparent appearance-none">
-                                    <option value="Men" {% if d.category == "Men" %}selected{% endif %}>Men</option>
-                                    <option value="Women" {% if d.category == "Women" %}selected{% endif %}>Women</option>
-                                    <option value="Kids" {% if d.category == "Kids" %}selected{% endif %}>Kids</option>
-                                </select>
-                            </div>
-                        </div>
+<div class="space-y-8">
 
-                        <div class="flex flex-col">
-                            <label class="text-[10px] font-bold tracking-widest text-stone-400 uppercase">Curated Badge</label>
-                            <input type="text" name="badge" value="{{ d.badge }}" class="input-atelier" placeholder="e.g. Limited Edition">
-                        </div>
+<div>
+    <label class="text-[10px] font-bold uppercase tracking-widest text-stone-400">
+        Product Name
+    </label>
+    <input type="text" name="name" value="{{ d.name }}" class="input-atelier text-lg font-playfair font-bold" required>
+</div>
 
-                        <div class="flex flex-col">
-                            <label class="text-[10px] font-bold tracking-widest text-stone-400 uppercase">Description / Storytelling</label>
-                            <textarea name="description" rows="5" class="input-atelier text-sm leading-relaxed resize-none" required>{{ d.description }}</textarea>
-                        </div>
+<div class="grid grid-cols-2 gap-8">
+    <div>
+        <label class="text-[10px] font-bold uppercase tracking-widest text-stone-400">
+            Price (PKR)
+        </label>
+        <input type="number" step="0.01" name="price" value="{{ d.price }}" class="input-atelier" required>
+    </div>
 
-                        <div class="pt-6">
-                            <button type="submit" class="w-full bg-dark text-white py-5 rounded-xl text-[10px] font-bold tracking-[0.3em] uppercase hover:bg-gold transition-all duration-500 shadow-xl shadow-dark/10">
-                                Apply Refinements
-                            </button>
-                            <a href="{% url 'index' %}" class="block text-center mt-4 text-[9px] font-bold tracking-widest text-stone-400 uppercase hover:text-dark transition-colors">
-                                Discard Changes
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </main>
+    <div>
+        <label class="text-[10px] font-bold uppercase tracking-widest text-stone-400">
+            Category
+        </label>
+        <select name="category" class="input-atelier">
+            <option value="Men" {% if d.category == "Men" %}selected{% endif %}>Men</option>
+            <option value="Women" {% if d.category == "Women" %}selected{% endif %}>Women</option>
+            <option value="Kids" {% if d.category == "Kids" %}selected{% endif %}>Kids</option>
+        </select>
+    </div>
+</div>
 
-    <script>
-        function previewUpdate(input, previewId) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.getElementById(previewId);
-                    img.src = e.target.result;
-                    img.closest('div').classList.add('ring-2', 'ring-gold', 'ring-offset-2');
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-    </script>
+<div>
+    <label class="text-[10px] font-bold uppercase tracking-widest text-stone-400">
+        Badge
+    </label>
+    <input type="text" name="badge" value="{{ d.badge }}" class="input-atelier">
+</div>
+
+<div>
+    <label class="text-[10px] font-bold uppercase tracking-widest text-stone-400">
+        Description
+    </label>
+    <textarea name="description" rows="5" class="input-atelier resize-none" required>{{ d.description }}</textarea>
+</div>
+
+<button type="submit"
+        class="w-full bg-dark text-white py-5 rounded-xl text-[10px] font-bold tracking-[0.3em] uppercase hover:bg-gold transition">
+    Apply Refinements
+</button>
+
+<a href="{% url 'index' %}"
+   class="block text-center mt-4 text-[9px] uppercase tracking-widest text-stone-400 hover:text-dark">
+    Discard Changes
+</a>
+
+</div>
+</div>
+</form>
+</main>
+
+<script>
+function previewUpdate(input, id) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById(id).src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+}
+
+function previewMultiple(input) {
+    [...input.files].forEach(file => console.log("Selected:", file.name));
+}
+</script>
 
 </body>
 </html>

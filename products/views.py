@@ -63,31 +63,36 @@ def insertData(request):
 
 # ---------------- UPDATE ----------------
 def updateData(request, id):
-    # Use prefetch_related if you want to be efficient
     product = get_object_or_404(Product, id=id)
-    # Get all existing gallery images for this product
     gallery_images = product.images.all()
 
     if request.method == "POST":
-        # ... (your existing field update logic) ...
+        product.name = request.POST.get("name")
+        product.price = request.POST.get("price")
+        product.category = request.POST.get("category")
+        product.badge = request.POST.get("badge")
+        product.description = request.POST.get("description")
 
-        # Update Gallery
+        if "image" in request.FILES:
+            product.image = request.FILES["image"]
+
         new_gallery = request.FILES.getlist("gallery")
         if new_gallery:
-            product.images.all().delete()  # Clears old, adds new
+            product.images.all().delete()
             for img in new_gallery[:4]:
                 ProductImage.objects.create(product=product, image=img)
 
         product.save()
         return redirect("index")
 
-    # Pass 'gallery' to the context
-    context = {
-        "d": product,
-        "gallery": gallery_images,
-        "categories": Product.CATEGORY_CHOICES,
-    }
-    return render(request, "update.html", context)
+    return render(
+        request,
+        "update.html",
+        {
+            "d": product,
+            "gallery": gallery_images,
+        },
+    )
 
 
 # ---------------- DELETE ----------------
